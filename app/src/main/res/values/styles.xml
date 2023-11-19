@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <!-- Customize the background color -->
+        <item name="android:background">#1976D2</item>
+        <!-- Use the color selector for item icon tint and text color -->
+        <item name="itemIconTint">@color/bottom_nav_selector</item>
+        <item name="itemTextColor">@color/bottom_nav_selector</item>
+    </style>
+
+
+    <style name="BottomNavigationView2" parent="Widget.Design.BottomNavigationView">
+        <!-- Customize the background color -->
+        <item name="android:background">#1976D2</item>
+        <!-- Use the color selector for item icon tint and text color -->
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+    </style>
+
+</resources>

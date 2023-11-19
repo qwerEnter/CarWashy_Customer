@@ -1,0 +1,193 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="200dp"
+    android:elevation="10dp">
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BOOKING DATE"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="80dp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/text1"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bookingdate"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/dot1"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text11"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/text1"
+                android:layout_alignStart="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LISENCE PLATE"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot1"
+                android:layout_alignStart="@+id/dot1"
+                android:layout_alignEnd="@+id/dot1"
+                android:layout_toEndOf="@+id/dot1"
+                android:layout_marginTop="23dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/noplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@+id/dot11"
+                android:layout_below="@+id/bookingdate"
+                android:text="NONE"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text11"
+                android:layout_alignStart="@+id/text11"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:text="TIMESLOT"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot11"
+                android:layout_alignStart="@+id/dot11"
+                android:layout_alignEnd="@+id/dot11"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/timestart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noplate"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@+id/dot2"
+                android:text="NONE"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/timefinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noplate"
+                android:layout_marginStart="76dp"
+                android:layout_marginTop="9dp"
+                android:layout_toEndOf="@+id/dot2"
+                android:text="NONE"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text2"
+                android:layout_alignStart="@+id/text2"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:text="STATUS"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot2"
+                android:layout_alignStart="@+id/dot2"
+                android:layout_alignEnd="@+id/dot2"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noplate"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="33dp"
+                android:layout_toEndOf="@+id/dot3"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewWaze"
+                android:layout_width="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="13dp"
+                app:cardCornerRadius="20dp"
+                android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/waze"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/waze_icon" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewValet"
+                android:layout_width="50dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="13dp"
+                app:cardCornerRadius="20dp"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/valet"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/valet_icon2" />
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>

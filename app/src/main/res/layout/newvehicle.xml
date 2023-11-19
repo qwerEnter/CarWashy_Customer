@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.NewVehiclePage">
+
+
+    <ImageView
+        android:id="@+id/imageview"
+        app:cardElevation="10dp"
+        android:layout_width="300dp"
+        android:layout_height="440dp"
+        app:cardBackgroundColor="@drawable/bgimage3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.577"
+        app:srcCompat="@drawable/bgimage3" />
+
+
+    <TextView
+        android:id="@+id/textView"
+        style="@android:style/Widget.Holo.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="1"
+        android:text="Vehicle Info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="#DF6589"
+        app:layout_constraintBottom_toTopOf="@+id/imageview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <EditText
+        android:id="@+id/carname"
+        android:layout_width="200dp"
+        android:layout_height="38dp"
+        android:background="@drawable/bgimage2"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="car name"
+        app:layout_constraintEnd_toEndOf="@+id/imageview"
+        app:layout_constraintStart_toStartOf="@+id/imageview"
+        app:layout_constraintTop_toBottomOf="@+id/imagecar" />
+
+    <EditText
+        android:id="@+id/noplate"
+        android:layout_width="200dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bgimage2"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="no plate"
+        app:layout_constraintEnd_toEndOf="@+id/carname"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/carname"
+        app:layout_constraintTop_toBottomOf="@+id/carname" />
+
+    <EditText
+        android:id="@+id/model"
+        android:layout_width="200dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/bgimage2"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="model"
+        app:layout_constraintEnd_toEndOf="@+id/noplate"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/noplate"
+        app:layout_constraintTop_toTopOf="@+id/noplate" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bgimage2"
+        app:layout_constraintEnd_toEndOf="@+id/model"
+        app:layout_constraintStart_toStartOf="@+id/model"
+        app:layout_constraintTop_toBottomOf="@+id/model">
+
+        <RadioButton
+            android:id="@+id/radioButtonOption1"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bgimage2"
+            android:text="   BIG MPV/SUV/4WD/VAN" />
+
+        <RadioButton
+            android:id="@+id/radioButtonOption2"
+            android:layout_width="250dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bgimage2"
+            android:layout_height="wrap_content"
+            android:text="   SMALL SEDAN/PROTON" />
+
+        <RadioButton
+            android:id="@+id/radioButtonOption3"
+            android:layout_width="250dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bgimage2"
+            android:layout_height="wrap_content"
+            android:text="   MOTOR 2-WHEELED VEHICLE" />
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/buttonaddvechicle"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="SAVE"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#00CF00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageview"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/imageview"
+        app:layout_constraintTop_toBottomOf="@+id/imageview"
+        app:layout_constraintVertical_bias="0.098" />
+
+    <Button
+        android:id="@+id/buttoncancel"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="CANCEL"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#FF0000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonaddvechicle"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonaddvechicle"
+        app:layout_constraintTop_toBottomOf="@+id/buttonaddvechicle"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imagecar"
+        android:layout_width="117dp"
+        android:layout_height="137dp"
+        app:layout_constraintEnd_toEndOf="@+id/imageview"
+        app:layout_constraintStart_toStartOf="@+id/imageview"
+        app:layout_constraintTop_toTopOf="@+id/imageview"
+        app:srcCompat="@drawable/imageicon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

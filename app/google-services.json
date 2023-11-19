@@ -1,0 +1,156 @@
+{
+  "project_info": {
+    "project_number": "190791870009",
+    "firebase_url": "https://carwashy-457b3-default-rtdb.firebaseio.com",
+    "project_id": "carwashy-457b3",
+    "storage_bucket": "carwashy-457b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190791870009:android:95cef77a2d33ec8582cfe8",
+        "android_client_info": {
+          "package_name": "com.example.carwashy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-FaY0QknPosbD_qlEcvXlcDq1nU2KJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190791870009:android:ce0a19a30df3981982cfe8",
+        "android_client_info": {
+          "package_name": "com.example.carwashymerchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-FaY0QknPosbD_qlEcvXlcDq1nU2KJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190791870009:android:209fcda45aebd45a82cfe8",
+        "android_client_info": {
+          "package_name": "com.example.fypmerchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-FaY0QknPosbD_qlEcvXlcDq1nU2KJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190791870009:android:3eacbca5cbd065e682cfe8",
+        "android_client_info": {
+          "package_name": "com.example.fypuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-FaY0QknPosbD_qlEcvXlcDq1nU2KJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190791870009:android:836aafeee8f64b6482cfe8",
+        "android_client_info": {
+          "package_name": "com.example.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ-FaY0QknPosbD_qlEcvXlcDq1nU2KJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190791870009-ut736v2oijtfru40fihi3k9rl5e587pc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

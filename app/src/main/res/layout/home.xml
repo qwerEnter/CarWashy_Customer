@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.HomePage">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="400dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="500dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="47dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/service_icon" />
+
+        <Button
+            android:id="@+id/buttonservice"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:backgroundTint="@color/white"
+            android:text="Services"
+            android:textColor="#1976D2"
+            android:textSize="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="296dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="500dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/reward_icon" />
+
+        <Button
+            android:id="@+id/buttonreward"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:backgroundTint="@color/white"
+            android:text="Reward"
+            android:textColor="#1976D2"
+            android:textSize="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="192dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="500dp"
+        app:cardElevation="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bookstatus_icon" />
+
+        <Button
+            android:id="@+id/buttonstatus"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:backgroundTint="@color/white"
+            android:text="Booking Status"
+            android:textColor="#1976D2"
+            android:textSize="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="500dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/receipt_icon" />
+
+        <Button
+            android:id="@+id/buttonreceipt"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:backgroundTint="@color/white"
+            android:text="Receipt"
+            android:textColor="#1976D2"
+            android:textSize="16dp" />
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:itemTextColor="@drawable/selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/BottomNavigationView"
+        app:menu="@menu/bottom_navigation_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

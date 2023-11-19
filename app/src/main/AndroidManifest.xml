@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.CarWashy"
+        tools:targetApi="31">
+        <activity
+            android:name=".UI.ReceiptPage"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.SessionDialogFragment"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ValetPage2"
+            android:exported="false" />
+        <activity
+            android:name=".UI.BookingPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.BookingStatusPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ValetPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.CarsetPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.PremisePage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.NewVehiclePage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.VehiclePage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.EditProfilePage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ProfilePage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.RewardPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.RegisterPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ForgotPasswordPage"
+            android:exported="false" />
+        <activity
+            android:name=".UI.HomePage"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

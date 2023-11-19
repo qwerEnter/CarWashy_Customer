@@ -1,0 +1,52 @@
+<!-- dialog_service_details.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@drawable/session_icon"/>
+
+    <RadioGroup
+        android:id="@+id/sessionGroup"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/session1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Morning Session  (10AM - 12PM)" />-->
+<!--        <RadioButton-->
+<!--            android:id="@+id/session2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Evening Session   (12PM - 7PM)" />-->
+<!--        <RadioButton-->
+<!--            android:id="@+id/session3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Night Session       (7PM - 10PM)" />-->
+
+    </RadioGroup>
+
+    <Button
+        android:layout_gravity="center"
+        android:id="@+id/addServiceButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="ADD"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#00CF00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.098" />
+</LinearLayout>

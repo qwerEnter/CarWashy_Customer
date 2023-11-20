@@ -214,14 +214,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#2196F3"
+                android:backgroundTint="#00BCD4"
                 android:layout_marginLeft="280dp"
                 app:cardCornerRadius="30dp">
 
                 <Button
                     android:id="@+id/buttonview"
                     android:layout_width="match_parent"
-                    app:backgroundTint="#2196F3"
+                    app:backgroundTint="#00BCD4"
                     android:layout_height="match_parent"
                     android:text="Booking Info"
                     android:textColor="@color/white"

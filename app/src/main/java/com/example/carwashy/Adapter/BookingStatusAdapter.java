@@ -2,6 +2,7 @@ package com.example.carwashy.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.R;
 import com.example.carwashy.UI.ReceiptPage;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdapter.ViewHolder> {
@@ -113,44 +118,72 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonCancel = itemView.findViewById(R.id.buttoncancel);
             // Set OnClickListener for the "Pay" button
-            buttonPay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Handle the "Pay" button click event here
-                    // You can start the ReceiptPage activity or perform any other action
-                    // For example, start the ReceiptPage activity:
-                    Intent intent = new Intent(context, ReceiptPage.class);
-                    context.startActivity(intent);
-                }
+            buttonPay.setOnClickListener(view -> {
+                // Handle the "Pay" button click event here
+                // You can start the ReceiptPage activity or perform any other action
+                // For example, start the ReceiptPage activity:
+                Intent intent = new Intent(context, ReceiptPage.class);
+                context.startActivity(intent);
             });
 
-            // Set OnClickListener for the "Cancel" button
-            buttonCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // Handle the "Cancel" button click event here
-                    // You can perform any action you want
+            buttonCancel.setOnClickListener(view -> {
+                int adapterPosition = getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < bookingstatusList.size()) {
+                    BookingInfo currentItem = bookingstatusList.get(adapterPosition);
 
-                    // Get the booking information
-                    BookingInfo currentItem = bookingstatusList.get(getAdapterPosition());
-
-                    // Remove the entry from the database
                     if (currentItem != null) {
                         String date = currentItem.getDate();
                         String noPlate = currentItem.getNoPlate();
 
-                        // Build the key based on date and noPlate
-                        String key = date + "_" + noPlate;
+                        databaseReference.orderByChild("date").equalTo(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                List<DataSnapshot> snapshotsToRemove = new ArrayList<>();
 
-                        // Remove the entry from the database
-                        databaseReference.child(key).removeValue();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                                    if (bookingInfo != null && noPlate.equals(bookingInfo.getNoPlate())) {
+                                        snapshotsToRemove.add(snapshot);
+                                    }
+                                }
 
-                        // Notify the adapter about the removal
-                        bookingstatusList.remove(getAdapterPosition());
-                        notifyItemRemoved(getAdapterPosition());
+                                // Remove the entries from the database
+                                for (DataSnapshot snapshotToRemove : snapshotsToRemove) {
+                                    snapshotToRemove.getRef().removeValue().addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            // Entry removed successfully
+                                            // Check if adapterPosition is still valid before updating the UI
+                                            if (adapterPosition < bookingstatusList.size()) {
+                                                // Notify the adapter about the removal
+                                                bookingstatusList.remove(adapterPosition);
+                                                notifyItemRemoved(adapterPosition);
+                                                Log.d("Firebase", "Successfully removed data");
+
+                                                // Redirect to the same page (refresh the current activity)
+                                                Intent intent = new Intent(context, context.getClass());
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                context.startActivity(intent);
+                                            }
+                                        } else {
+                                            // Handle failure
+                                            if (task.getException() != null) {
+                                                Log.e("Firebase", "Error removing data: " + task.getException());
+                                            } else {
+                                                Log.e("Firebase", "Error removing data: Unknown error");
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                // Handle errors
+                                Log.e("Firebase", "Error querying data: " + databaseError.getMessage());
+                            }
+                        });
                     }
                 }
             });
+
 
 
         }

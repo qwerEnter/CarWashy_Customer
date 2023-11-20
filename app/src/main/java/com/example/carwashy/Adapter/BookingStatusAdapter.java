@@ -1,5 +1,6 @@
 package com.example.carwashy.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -132,57 +133,70 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     BookingInfo currentItem = bookingstatusList.get(adapterPosition);
 
                     if (currentItem != null) {
-                        String date = currentItem.getDate();
-                        String noPlate = currentItem.getNoPlate();
+                        // Show a confirmation dialog
+                        new AlertDialog.Builder(context)
+                                .setTitle("Cancel Booking")
+                                .setMessage("Are you sure you want to cancel this booking?")
+                                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                    // User clicked Yes, proceed with cancellation
+                                    String date = currentItem.getDate();
+                                    String noPlate = currentItem.getNoPlate();
 
-                        databaseReference.orderByChild("date").equalTo(date).addListenerForSingleValueEvent(new ValueEventListener() {
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                List<DataSnapshot> snapshotsToRemove = new ArrayList<>();
+                                    databaseReference.orderByChild("date").equalTo(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            List<DataSnapshot> snapshotsToRemove = new ArrayList<>();
 
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
-                                    if (bookingInfo != null && noPlate.equals(bookingInfo.getNoPlate())) {
-                                        snapshotsToRemove.add(snapshot);
-                                    }
-                                }
-
-                                // Remove the entries from the database
-                                for (DataSnapshot snapshotToRemove : snapshotsToRemove) {
-                                    snapshotToRemove.getRef().removeValue().addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            // Entry removed successfully
-                                            // Check if adapterPosition is still valid before updating the UI
-                                            if (adapterPosition < bookingstatusList.size()) {
-                                                // Notify the adapter about the removal
-                                                bookingstatusList.remove(adapterPosition);
-                                                notifyItemRemoved(adapterPosition);
-                                                Log.d("Firebase", "Successfully removed data");
-
-                                                // Redirect to the same page (refresh the current activity)
-                                                Intent intent = new Intent(context, context.getClass());
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                                context.startActivity(intent);
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                                                if (bookingInfo != null && noPlate.equals(bookingInfo.getNoPlate())) {
+                                                    snapshotsToRemove.add(snapshot);
+                                                }
                                             }
-                                        } else {
-                                            // Handle failure
-                                            if (task.getException() != null) {
-                                                Log.e("Firebase", "Error removing data: " + task.getException());
-                                            } else {
-                                                Log.e("Firebase", "Error removing data: Unknown error");
+
+                                            // Remove the entries from the database
+                                            for (DataSnapshot snapshotToRemove : snapshotsToRemove) {
+                                                snapshotToRemove.getRef().removeValue().addOnCompleteListener(task -> {
+                                                    if (task.isSuccessful()) {
+                                                        // Entry removed successfully
+                                                        // Check if adapterPosition is still valid before updating the UI
+                                                        if (adapterPosition < bookingstatusList.size()) {
+                                                            // Notify the adapter about the removal
+                                                            bookingstatusList.remove(adapterPosition);
+                                                            notifyItemRemoved(adapterPosition);
+                                                            Log.d("Firebase", "Successfully removed data");
+
+                                                            // Redirect to the same page (refresh the current activity)
+                                                            Intent intent = new Intent(context, context.getClass());
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            context.startActivity(intent);
+                                                        }
+                                                    } else {
+                                                        // Handle failure
+                                                        if (task.getException() != null) {
+                                                            Log.e("Firebase", "Error removing data: " + task.getException());
+                                                        } else {
+                                                            Log.e("Firebase", "Error removing data: Unknown error");
+                                                        }
+                                                    }
+                                                });
                                             }
                                         }
-                                    });
-                                }
-                            }
 
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                                // Handle errors
-                                Log.e("Firebase", "Error querying data: " + databaseError.getMessage());
-                            }
-                        });
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            // Handle errors
+                                            Log.e("Firebase", "Error querying data: " + databaseError.getMessage());
+                                        }
+                                    });
+                                })
+                                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                                    // User clicked No, do nothing
+                                    dialog.dismiss();
+                                })
+                                .show();
                     }
                 }
             });
+
 
 
 

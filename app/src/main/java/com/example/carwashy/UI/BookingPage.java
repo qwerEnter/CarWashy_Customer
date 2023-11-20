@@ -73,7 +73,7 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             SharedPreferences sharedPreferencesC = getSharedPreferences("ServicePageDataC", Context.MODE_PRIVATE);
             for (String serviceName : sharedPreferencesC.getStringSet("services", new HashSet<>())) {
                 String carsets = sharedPreferencesC.getString(serviceName, "");
-                Service service = new Service(serviceName, "Default Description", Double.parseDouble(carsets),Double.parseDouble(carsets), "Default Image Uri");
+                Service service = new Service(serviceName, "Default Description",  Double.parseDouble(carsets),Double.parseDouble(carsets), Double.parseDouble(carsets),Double.parseDouble(carsets),Double.parseDouble(carsets), "Default Image Uri");
                 addedServices.add(service);
             }
 
@@ -135,25 +135,34 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         // Retrieve totalCost
         double totalCost = 0;
         for (String serviceName : sharedPreferencesC.getStringSet("services", new HashSet<>())) {
-            double serviceCost = Double.parseDouble(sharedPreferencesC.getString(serviceName, "0"));
-            totalCost += serviceCost;
+            String serviceCostString = sharedPreferencesC.getString(serviceName, "0");
+
+            // Check if the string is not empty before parsing
+            if (!serviceCostString.isEmpty()) {
+                double serviceCost = Double.parseDouble(serviceCostString);
+                totalCost += serviceCost;
+            }
         }
 
         TextView costTextView = findViewById(R.id.cost);
         costTextView.setText("RM " + totalCost);
 
         if (addedServicesAdapter != null) {
-
             List<Service> addedServices = new ArrayList<>();
             for (String serviceName : sharedPreferencesC.getStringSet("services", new HashSet<>())) {
                 String carsets = sharedPreferencesC.getString(serviceName, "");
-                Service service = new Service(serviceName, "Default Description", Double.parseDouble(carsets),Double.parseDouble(carsets), "Default Image Uri");
-                addedServices.add(service);
+
+                // Check if the string is not empty before parsing
+                if (!carsets.isEmpty()) {
+                    Service service = new Service(serviceName, "Default Description", Double.parseDouble(carsets), Double.parseDouble(carsets), Double.parseDouble(carsets), Double.parseDouble(carsets), Double.parseDouble(carsets), "Default Image Uri");
+                    addedServices.add(service);
+                }
             }
             addedServicesAdapter.setServiceList(addedServices);
             addedServicesAdapter.notifyDataSetChanged();
-            }
         }
+    }
+
     private void retrieveDataFromSharedPreferencesD() {
         SharedPreferences preferencesD = getSharedPreferences("ServicePageDataD", Context.MODE_PRIVATE);
 

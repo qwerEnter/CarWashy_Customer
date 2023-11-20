@@ -99,36 +99,9 @@
             android:textSize="16dp" />
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView4"
-        android:layout_width="300dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="24dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="500dp"
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/receipt_icon" />
 
-        <Button
-            android:id="@+id/buttonreceipt"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="110dp"
-            android:backgroundTint="@color/white"
-            android:text="Receipt"
-            android:textColor="#1976D2"
-            android:textSize="16dp" />
-    </androidx.cardview.widget.CardView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

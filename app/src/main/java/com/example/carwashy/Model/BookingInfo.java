@@ -22,7 +22,7 @@ public class BookingInfo {
     private String phone;
     private String carsetJson;
     private String currentaddress;
-
+    private double totalServiceTime;
     private String timefinish;
 
     // List to store services
@@ -43,6 +43,7 @@ public class BookingInfo {
         this.timefinish = "";
         this.phone = "-";
         this.currentaddress = "-";
+        this.totalServiceTime =totalServiceTime;
         this.services = services;
     }
 
@@ -95,9 +96,13 @@ public class BookingInfo {
     }
 
 
+    public double getTotalServiceTime() {
+        return totalServiceTime;
+    }
 
-
-
+    public void setTotalServiceTime(double totalServiceTime) {
+        this.totalServiceTime = totalServiceTime;
+    }
 
     public void setCarsetJson(String carsetJson) {
         Gson gson = new Gson();

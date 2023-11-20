@@ -1,12 +1,12 @@
 package com.example.carwashy.UI;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.carwashy.Login;
 import com.example.carwashy.R;
@@ -22,14 +22,7 @@ public class HomePage extends AppCompatActivity {
 
 
         // go to reward page
-        Button buttonreceipt = findViewById(R.id.buttonreceipt);
-        buttonreceipt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomePage.this, ReceiptPage.class);
-                startActivity(intent);
-            }
-        });
+
 
         // go to reward page
         Button buttonreward = findViewById(R.id.buttonreward);

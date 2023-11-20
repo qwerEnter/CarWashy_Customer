@@ -32,7 +32,7 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
 
     private Service service;
     private ServiceAddedListener serviceAddedListener;
-    private TextView totalCostTextView,rewardPointTextView, emptyView;
+    private TextView totalCostTextView,servicetimeTextView, emptyView;
     private RecyclerView addedServicesRecyclerView;
     private ServiceAdapter addedServicesAdapter;
 
@@ -57,11 +57,13 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
 
         TextView nameTextView = view.findViewById(R.id.nameTextView);
         TextView costTextView = view.findViewById(R.id.costTextView);
+        TextView timetakenTextView = view.findViewById(R.id.timetakenTextView);
         TextView pointTextView = view.findViewById(R.id.rewardpointTextView);
         TextView descriptionTextView = view.findViewById(R.id.descriptionTextView);
         ImageView imageView = view.findViewById(R.id.imageView);
         Button addButton = view.findViewById(R.id.addServiceButton);
         Button cancelButton = view.findViewById(R.id.buttoncancel);
+
         totalCostTextView = requireActivity().findViewById(R.id.totalcost);
         emptyView = requireActivity().findViewById(R.id.emptyView);
 
@@ -70,8 +72,23 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
         addedServicesRecyclerView.setLayoutManager(new LinearLayoutManager(requireActivity()));
         addedServicesRecyclerView.setAdapter(addedServicesAdapter);
 
+        SharedPreferences preferencesA = requireContext().getSharedPreferences("ServicePageDataA", Context.MODE_PRIVATE);
+        String vehicleType = preferencesA.getString("vehicleType", "");
+
+
+
         nameTextView.setText("SERVICE TYPE   : " + service.getName());
-        costTextView.setText("SERVICE COST   : RM " + service.getCost());
+
+        if ("SMALL SEDAN/PROTON".equals(vehicleType)) {
+            // Display cost2 and servicetime2
+            costTextView.setText("SERVICE COST   : RM " + service.getCost2());
+            timetakenTextView.setText("Estimation Service Time  : " + service.getServicetime2() + "0 hours/min");
+        } else {
+            // Display cost and servicetime
+            costTextView.setText("SERVICE COST   : RM " + service.getCost());
+            timetakenTextView.setText("Estimation Service Time  : " + service.getServicetime() + "0 hours/min");
+        }
+
         descriptionTextView.setText("DESCRIPTION   : " + service.getDescription());
         pointTextView.setText("REWARD POINTS   : " + service.getPoints()+" RP");
         Picasso.get().load(service.getImageUri()).into(imageView);
@@ -97,7 +114,18 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
         if (existingServices.add(service.getName())) {
             Toast.makeText(requireContext(), "Service added successfully", Toast.LENGTH_SHORT).show();
             serviceEditor.putStringSet("services", existingServices);
-            serviceEditor.putString(service.getName(), String.valueOf(service.getCost()));
+
+            // Fetch vehicleType from ServicePageDataA
+            SharedPreferences preferencesA = requireContext().getSharedPreferences("ServicePageDataA", Context.MODE_PRIVATE);
+            String vehicleType = preferencesA.getString("vehicleType", "");
+
+            if ("SMALL SEDAN/PROTON".equals(vehicleType)) {
+                // Store cost2 instead of cost
+                serviceEditor.putString(service.getName(), String.valueOf(service.getCost2()));
+            } else {
+                // Store cost instead of cost2
+                serviceEditor.putString(service.getName(), String.valueOf(service.getCost()));
+            }
 
             // Apply changes to ServicePageDataC SharedPreferences
             serviceEditor.apply();
@@ -110,6 +138,8 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
             Toast.makeText(requireContext(), "Service already added", Toast.LENGTH_SHORT).show();
         }
     }
+
+
     private void addServiceToSharedPreferences2(double points) {
         // Reward points SharedPreferences
         SharedPreferences rewardSharedPreferences = requireContext().getSharedPreferences("ServicePageDataReward", Context.MODE_PRIVATE);
@@ -152,8 +182,17 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
             List<Service> addedServices = new ArrayList<>();
             for (String serviceName : sharedPreferences.getStringSet("services", new HashSet<>())) {
                 String carsets = sharedPreferences.getString(serviceName, "");
-                Service service = new Service(serviceName, "Default Description", Double.parseDouble(carsets),Double.parseDouble(carsets), "Default Image Uri");
-                addedServices.add(service);
+
+                // Check if the string is not empty before parsing
+                if (!carsets.isEmpty()) {
+                    double parsedCarsets = Double.parseDouble(carsets);
+                    Service service = new Service(serviceName, "Default Description", parsedCarsets, parsedCarsets, parsedCarsets, parsedCarsets, parsedCarsets, "Default Image Uri");
+                    addedServices.add(service);
+                } else {
+                    // Handle empty string case, e.g., provide default values or skip adding the service
+                    // For now, I'm skipping the service
+                    continue;
+                }
             }
 
             addedServicesAdapter.setServiceList(addedServices);
@@ -165,18 +204,30 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
         }
     }
 
+
     private void updateTotalCost() {
         double totalCost = 0;
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("ServicePageDataC", Context.MODE_PRIVATE);
         for (String serviceName : sharedPreferences.getStringSet("services", new HashSet<>())) {
-            double serviceCost = Double.parseDouble(sharedPreferences.getString(serviceName, "0"));
+            String serviceCostString = sharedPreferences.getString(serviceName, "0");
+            double serviceCost = 0.0; // Default value if the string is empty
+            if (!serviceCostString.isEmpty()) {
+                serviceCost = Double.parseDouble(serviceCostString);
+            }
             totalCost += serviceCost;
         }
 
         totalCostTextView.setText("RM " + totalCost);
     }
 
+
+
+
+
     private void saveDataToBookingPage() {
+
+
+
         updateAddedServicesList();
         updateTotalCost();
         // Call addServiceToSharedPreferences2 with the appropriate points value

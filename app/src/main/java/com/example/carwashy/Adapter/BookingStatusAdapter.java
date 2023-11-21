@@ -3,6 +3,7 @@ package com.example.carwashy.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,10 +69,17 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
         }
-        else if ("Paid".equals(status.getStatus())) {
+        else if ("Payment Verified".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.VISIBLE);
+            holder.buttonDelete.setVisibility(View.GONE);
+            holder.buttonRebook.setVisibility(View.GONE);
+        }
+        else if ("Paid".equals(status.getStatus())) {
+            holder.buttonPay.setVisibility(View.GONE);
+            holder.buttonCancel.setVisibility(View.GONE);
+            holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
         }
@@ -131,9 +139,23 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             buttonDelete = itemView.findViewById(R.id.buttondelete);
 
             buttonPay.setOnClickListener(view -> {
-                Intent intent = new Intent(context, ReceiptPage.class);
-                context.startActivity(intent);
+                // Get the current BookingInfo object
+                BookingInfo currentItem = bookingstatusList.get(getAdapterPosition());
+
+                // Check if currentItem is not null
+                if (currentItem != null) {
+                    // Get the noPlate value
+                    String noPlate = currentItem.getNoPlate();
+
+                    // Save the noPlate value to SharedPreferences
+                    saveNoPlateToSharedPreferences(context, noPlate);
+
+                    // Start the ReceiptPage activity
+                    Intent intent = new Intent(context, ReceiptPage.class);
+                    context.startActivity(intent);
+                }
             });
+
             buttonCancel.setOnClickListener(view -> {
                 int adapterPosition = getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < bookingstatusList.size()) {
@@ -208,6 +230,15 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                 context.startActivity(intent);
             });
         }
+    }
+
+    private void saveNoPlateToSharedPreferences(Context context, String noPlate) {
+        SharedPreferences preferences = context.getSharedPreferences("dataNoplate", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Save the noPlate value to SharedPreferences
+        editor.putString("noPlate", noPlate);
+        editor.apply();
     }
 
     private boolean isValetNone(BookingInfo bookingInfo) {

@@ -3,7 +3,6 @@ package com.example.carwashy.UI;
 import static com.example.carwashy.Model.BookingInfo.convertJsonToServicesList;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,7 +12,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,13 +27,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Adapter.ServiceAdapter;
-import com.example.carwashy.Login;
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.Model.CarWashRecord;
 import com.example.carwashy.Model.Service;
 import com.example.carwashy.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,8 +79,23 @@ public class ReceiptPage extends AppCompatActivity {
 
         imagereceipt = findViewById(R.id.imagereceipt);
 
+        // Retrieve the noPlate value from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("dataNoplate", MODE_PRIVATE);
+        String noPlate = preferences.getString("noPlate", "");
+
+        // Set the noPlate value to the searchlicense TextView
+        TextView searchlicense = findViewById(R.id.searchlicense);
+        searchlicense.setText(noPlate);
         receiptReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
-        final EditText searchlicense = findViewById(R.id.searchlicense);
+
+        if (!noPlate.isEmpty()) {
+            // Perform the search operation using noPlate
+            retrieveBookingInfoData(noPlate);
+        }
+
+        receiptReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
+
+
 
         ImageView search = findViewById(R.id.search);
         search.setOnClickListener(v -> {
@@ -145,26 +155,7 @@ public class ReceiptPage extends AppCompatActivity {
         });
 
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            // Your existing code for handling item selection
 
-            if (item.getItemId() == R.id.menu_home) {
-                Intent intent = new Intent(ReceiptPage.this, HomePage.class);
-                startActivity(intent);
-            }
-            if (item.getItemId() == R.id.menu_profile) {
-                Intent intent = new Intent(ReceiptPage.this, ProfilePage.class);
-                startActivity(intent);
-                return true;
-            }
-            if (item.getItemId() == R.id.menu_logout) {
-                // Show a confirmation dialog
-                showLogoutConfirmationDialog();
-                return true;
-            }
-            return false;
-        });
         carwashrecInfo = new CarWashRecord();
 
         // Set OnClickListener for the imagecar
@@ -181,6 +172,8 @@ public class ReceiptPage extends AppCompatActivity {
                 launchGallery();
             }
         });
+
+
     }
 
     @Override
@@ -343,28 +336,5 @@ public class ReceiptPage extends AppCompatActivity {
     }
 
 
-    private void showLogoutConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("CarWashy");
-        builder.setMessage("Are you sure you want to logout?");
-        builder.setPositiveButton("Yes", (dialog, which) -> {
-            // User clicked Yes, perform logout
-            performLogout();
-        });
-        builder.setNegativeButton("No", (dialog, which) -> {
-            // User clicked No, dismiss the dialog
-            dialog.dismiss();
-        });
-        builder.show();
-    }
-    private void performLogout() {
-        // Add your logout logic here
-        // For example, if you are using Firebase Authentication:
-        FirebaseAuth.getInstance().signOut();
 
-        // Redirect to the login screen or any other appropriate screen
-        Intent intent = new Intent(ReceiptPage.this, Login.class);
-        startActivity(intent);
-        finish();  // Optional: Finish the current activity to prevent going back
-    }
 }

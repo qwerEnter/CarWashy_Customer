@@ -162,7 +162,6 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             addedServicesAdapter.notifyDataSetChanged();
         }
     }
-
     private void retrieveDataFromSharedPreferencesD() {
         SharedPreferences preferencesD = getSharedPreferences("ServicePageDataD", Context.MODE_PRIVATE);
 
@@ -213,8 +212,6 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         String bookingId = bookingRef.push().getKey();
         bookingRef.child(bookingId).setValue(bookingInfo);
     }
-
-
     private void clearSharedPreferences(String sharedPreferencesName) {
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

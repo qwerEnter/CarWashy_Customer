@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.R;
+import com.example.carwashy.UI.ReBookPage;
 import com.example.carwashy.UI.ReceiptPage;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +41,6 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookingstatus_item, parent, false);
         return new ViewHolder(view, parent.getContext());
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -100,14 +100,14 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
     public int getItemCount() {
         return bookingstatusList.size();
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView noplate, status, bookingdate,timestart,timefinish;
         private Context context;
         CardView cardViewWaze,cardViewValet;
-
         Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook;
-
         DatabaseReference databaseReference; // Add this reference
 
 
@@ -123,22 +123,17 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
             databaseReference = FirebaseDatabase.getInstance().getReference("BookingInfo"); // Replace with your actual database path
 
-
             // Initialize the button reference
             buttonPay = itemView.findViewById(R.id.buttonpay);
             buttonRebook = itemView.findViewById(R.id.buttonrebook);
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonCancel = itemView.findViewById(R.id.buttoncancel);
             buttonDelete = itemView.findViewById(R.id.buttondelete);
-            // Set OnClickListener for the "Pay" button
+
             buttonPay.setOnClickListener(view -> {
-                // Handle the "Pay" button click event here
-                // You can start the ReceiptPage activity or perform any other action
-                // For example, start the ReceiptPage activity:
                 Intent intent = new Intent(context, ReceiptPage.class);
                 context.startActivity(intent);
             });
-
             buttonCancel.setOnClickListener(view -> {
                 int adapterPosition = getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < bookingstatusList.size()) {
@@ -208,13 +203,12 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     }
                 }
             });
-
-
-
-
+            buttonRebook.setOnClickListener(view -> {
+                Intent intent = new Intent(context, ReBookPage.class);
+                context.startActivity(intent);
+            });
         }
     }
-
 
     private boolean isValetNone(BookingInfo bookingInfo) {
         return bookingInfo != null && "-".equals(bookingInfo.getValet());

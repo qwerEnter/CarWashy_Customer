@@ -58,16 +58,25 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonPay.setVisibility(View.VISIBLE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.GONE);
+            holder.buttonDelete.setVisibility(View.GONE);
         }
         else if ("Pending".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.VISIBLE);
             holder.buttonView.setVisibility(View.GONE);
+            holder.buttonDelete.setVisibility(View.GONE);
         }
         else if ("Paid".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.VISIBLE);
+            holder.buttonDelete.setVisibility(View.GONE);
+        }
+        else if ("Full Slot".equals(status.getStatus())) {
+            holder.buttonPay.setVisibility(View.GONE);
+            holder.buttonCancel.setVisibility(View.GONE);
+            holder.buttonView.setVisibility(View.GONE);
+            holder.buttonDelete.setVisibility(View.VISIBLE);
         }
 
         BookingInfo currentItem = bookingstatusList.get(position);
@@ -96,7 +105,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         private Context context;
         CardView cardViewWaze,cardViewValet;
 
-        Button buttonPay,buttonCancel,buttonView;
+        Button buttonPay,buttonCancel,buttonView,buttonDelete;
 
         DatabaseReference databaseReference; // Add this reference
 
@@ -118,6 +127,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             buttonPay = itemView.findViewById(R.id.buttonpay);
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonCancel = itemView.findViewById(R.id.buttoncancel);
+            buttonDelete = itemView.findViewById(R.id.buttondelete);
             // Set OnClickListener for the "Pay" button
             buttonPay.setOnClickListener(view -> {
                 // Handle the "Pay" button click event here
@@ -135,7 +145,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     if (currentItem != null) {
                         // Show a confirmation dialog
                         new AlertDialog.Builder(context)
-                                .setTitle("Cancel Booking")
+                                .setTitle("Booking Cancellation")
                                 .setMessage("Are you sure you want to cancel this booking?")
                                 .setPositiveButton(android.R.string.yes, (dialog, which) -> {
                                     // User clicked Yes, proceed with cancellation

@@ -59,24 +59,28 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
+            holder.buttonRebook.setVisibility(View.GONE);
         }
         else if ("Pending".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.VISIBLE);
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
+            holder.buttonRebook.setVisibility(View.GONE);
         }
         else if ("Paid".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.VISIBLE);
             holder.buttonDelete.setVisibility(View.GONE);
+            holder.buttonRebook.setVisibility(View.GONE);
         }
         else if ("Full Slot".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.VISIBLE);
+            holder.buttonRebook.setVisibility(View.VISIBLE);
         }
 
         BookingInfo currentItem = bookingstatusList.get(position);
@@ -90,9 +94,6 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.cardViewValet.setVisibility(View.VISIBLE);
         }
 
-
-
-
     }
 
     @Override
@@ -105,7 +106,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         private Context context;
         CardView cardViewWaze,cardViewValet;
 
-        Button buttonPay,buttonCancel,buttonView,buttonDelete;
+        Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook;
 
         DatabaseReference databaseReference; // Add this reference
 
@@ -125,6 +126,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
             // Initialize the button reference
             buttonPay = itemView.findViewById(R.id.buttonpay);
+            buttonRebook = itemView.findViewById(R.id.buttonrebook);
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonCancel = itemView.findViewById(R.id.buttoncancel);
             buttonDelete = itemView.findViewById(R.id.buttondelete);

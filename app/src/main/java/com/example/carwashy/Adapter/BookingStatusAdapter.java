@@ -55,7 +55,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         holder.timefinish.setText(status.getTimeFinish());
 
         // Show/hide buttons based on the status
-        if ("Accept".equals(status.getStatus())) {
+        if ("Available".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.VISIBLE);
             holder.buttonCancel.setVisibility(View.GONE);
             holder.buttonView.setVisibility(View.GONE);
@@ -76,13 +76,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
         }
-        else if ("Paid".equals(status.getStatus())) {
-            holder.buttonPay.setVisibility(View.GONE);
-            holder.buttonCancel.setVisibility(View.GONE);
-            holder.buttonView.setVisibility(View.GONE);
-            holder.buttonDelete.setVisibility(View.GONE);
-            holder.buttonRebook.setVisibility(View.GONE);
-        }
+
         else if ("Full Slot".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);

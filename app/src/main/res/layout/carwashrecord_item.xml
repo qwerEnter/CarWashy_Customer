@@ -190,30 +190,43 @@
             </androidx.cardview.widget.CardView>
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewPay"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginLeft="280dp"
-                android:backgroundTint="#00CF00"
-                app:cardCornerRadius="50dp"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewView"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#00BCD4"
+                android:backgroundTint="#00CF00"
                 android:layout_marginLeft="280dp"
                 app:cardCornerRadius="30dp">
 
                 <Button
                     android:id="@+id/buttonview"
                     android:layout_width="match_parent"
-                    app:backgroundTint="#00BCD4"
+                    app:backgroundTint="#00CF00"
                     android:layout_height="match_parent"
-                    android:text="Booking Info"
+                    android:text="View Details"
+                    android:textColor="@color/white"
+                    android:textSize="10dp"
+                    android:padding="0dp"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewVerify"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#FFC107"
+                android:layout_marginLeft="280dp"
+                app:cardCornerRadius="30dp">
+
+                <Button
+                    android:id="@+id/buttonverify"
+                    android:layout_width="match_parent"
+                    app:backgroundTint="#FFC107"
+                    android:layout_height="match_parent"
+                    android:text="Verifying Payment"
                     android:textColor="@color/white"
                     android:textSize="10dp"
                     android:padding="0dp"
@@ -222,32 +235,8 @@
 
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewCancel"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="280dp"
-                android:backgroundTint="#FF0000"
-                app:cardCornerRadius="30dp"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewRebook"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginLeft="280dp"
-                android:backgroundTint="#FFC107"
-                app:cardCornerRadius="30dp"/>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewDelete"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="57dp"
-                android:layout_marginLeft="280dp"
-                android:backgroundTint="#FF0000"
-                app:cardCornerRadius="30dp"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

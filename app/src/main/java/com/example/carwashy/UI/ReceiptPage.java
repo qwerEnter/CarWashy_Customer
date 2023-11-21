@@ -139,7 +139,7 @@ public class ReceiptPage extends AppCompatActivity {
 
                 new Handler().postDelayed(() -> {
                     // Navigate to BookingStatusPage
-                    Intent intent = new Intent(ReceiptPage.this, BookingStatusPage.class);
+                    Intent intent = new Intent(ReceiptPage.this, CarWashRecordPage.class);
                     startActivity(intent);
                 }, 2000); // 3000 milliseconds (3 seconds) delay, adjust as needed
 

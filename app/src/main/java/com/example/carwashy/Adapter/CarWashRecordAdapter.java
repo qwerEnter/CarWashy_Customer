@@ -48,9 +48,11 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
         // Show/hide buttons based on the status
         if ("Payment Verified".equals(status.getStatus())) {
             holder.buttonView.setVisibility(View.VISIBLE);
+            holder.buttonVerify.setVisibility(View.GONE);
         }
         else if ("Paid".equals(status.getStatus())) {
             holder.buttonView.setVisibility(View.GONE);
+            holder.buttonVerify.setVisibility(View.VISIBLE);
         }
 
         CarWashRecord currentItem = carwashrecordList.get(position);
@@ -74,7 +76,7 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
         TextView noplate, status, bookingdate,timestart,timefinish;
         private Context context;
         CardView cardViewWaze,cardViewValet;
-        Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook;
+        Button buttonView, buttonVerify;
         DatabaseReference databaseReference; // Add this reference
 
 
@@ -91,10 +93,13 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
             cardViewWaze = itemView.findViewById(R.id.cardViewWaze);
             cardViewValet = itemView.findViewById(R.id.cardViewValet);
 
+            buttonView = itemView.findViewById(R.id.buttonview);
+            buttonVerify = itemView.findViewById(R.id.buttonverify);
+
+
             databaseReference = FirebaseDatabase.getInstance().getReference("CarWashRecord");
 
-            // Initialize the button reference
-            buttonView = itemView.findViewById(R.id.buttonview);
+
         }
     }
 

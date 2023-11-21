@@ -43,29 +43,6 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="200dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.16"
-        app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/search_icon"
-            tools:layout_editor_absoluteX="299dp"
-            tools:layout_editor_absoluteY="300dp" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -396,6 +373,17 @@
             android:layout_marginTop="140dp"
             android:layout_marginBottom="20dp"
             android:text="Session"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="20dp"
+            android:text="Status"
             android:textSize="13dp"
             android:textStyle="bold" />
 

@@ -95,19 +95,6 @@ public class ReceiptPage extends AppCompatActivity {
 
         receiptReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
 
-
-
-        ImageView search = findViewById(R.id.search);
-        search.setOnClickListener(v -> {
-            String licensePlate = searchlicense.getText().toString().trim();
-            if (!licensePlate.isEmpty()) {
-                retrieveBookingInfoData(licensePlate);
-            } else {
-                Toast.makeText(this, "Please enter a license plate number", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
         Button buttonsave = findViewById(R.id.buttonsave);
         buttonsave.setOnClickListener(view -> {
 
@@ -122,6 +109,11 @@ public class ReceiptPage extends AppCompatActivity {
             carwashrecInfo.setCurrentaddress(((TextView) findViewById(R.id.useraddress)).getText().toString());
             carwashrecInfo.setPhone(((TextView) findViewById(R.id.usercurrentphone)).getText().toString());
             carwashrecInfo.setPhone(((TextView) findViewById(R.id.usercurrentphone)).getText().toString());
+            carwashrecInfo.setStatus(((TextView) findViewById(R.id.status)).getText().toString());
+
+
+            // Update the status to "Paid"
+            carwashrecInfo.setStatus("Paid");
 
             // Retrieve the list of services from SharedPreferences
             List<Service> services = retrieveServicesFromSharedPreferences();
@@ -136,6 +128,12 @@ public class ReceiptPage extends AppCompatActivity {
 
                 // Save the CarWashRecord along with the image
                 saveCarWashRecordToFirebase(carwashrecInfo, receipt);
+
+                // Delete the current item from BookingInfo based on preferences
+                String date = carwashrecInfo.getDate();
+                deleteBookingInfoItem(date, noPlate);
+
+                
                 // Show a Toast message indicating successful save
                 Toast.makeText(ReceiptPage.this, "Receipt Successfully Saved", Toast.LENGTH_SHORT).show();
 
@@ -175,6 +173,36 @@ public class ReceiptPage extends AppCompatActivity {
 
 
     }
+
+    private void deleteBookingInfoItem(String date, String noPlate) {
+        DatabaseReference bookingInfoRef = FirebaseDatabase.getInstance().getReference("BookingInfo");
+
+        // Query Firebase for the item to delete
+        bookingInfoRef.orderByChild("date").equalTo(date).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Iterate over the matching items
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                        if (bookingInfo != null && bookingInfo.getNoPlate().equals(noPlate)) {
+                            // Delete the item
+                            snapshot.getRef().removeValue();
+                            break; // Assuming there's only one matching item, you can remove this if there are multiple
+                        }
+                    }
+                } else {
+                    Toast.makeText(ReceiptPage.this, "No data found for the entered date and license plate", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(ReceiptPage.this, "Error deleting data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -263,6 +291,9 @@ public class ReceiptPage extends AppCompatActivity {
 
         final TextView usercurrentphone = findViewById(R.id.usercurrentphone);
         usercurrentphone.setText(receipt.getPhone());
+
+        final TextView userstatus = findViewById(R.id.status);
+        userstatus.setText(receipt.getStatus());
 
         // Retrieve the JSON string from SharedPreferences
         SharedPreferences preferences = getSharedPreferences("bookingServiceData", MODE_PRIVATE);

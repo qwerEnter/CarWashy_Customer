@@ -4,11 +4,12 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflec
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarWashRecord {
 
-    private String noPlate;
+    private String noplate;
     private List<Service> carset;
     private String valet;
     private String totalcost;
@@ -17,24 +18,41 @@ public class CarWashRecord {
     private String address;
     private String date;
     private String session;
+    private String timestart;
     private String phone;
+    private String carsetJson;
     private String currentaddress;
-    private String receipt; // New field for image URI
-
-    private String timeslot;
+    private double totalServiceTime;
+    private String timefinish;
 
     // List to store services
     private List<Service> services;
 
     public CarWashRecord() {
 
+        this.noplate = noplate;
+        this.carset = new ArrayList<>();
+        this.valet = valet;
+        this.totalcost = totalcost;
+        this.carName = carName;
+        this.address = address;
+        this.status = "Pending";
+        this.date = date;
+        this.session = session;
+        this.timestart = "Pending";
+        this.timefinish = "";
+        this.phone = "-";
+        this.currentaddress = "-";
+        this.totalServiceTime =totalServiceTime;
+        this.services = services;
     }
-
-
 
     public String getCarsetJson() {
         Gson gson = new Gson();
         return gson.toJson(carset);
+    }
+    public String getNoPlate() {
+        return noplate;
     }
     public List<Service> getCarset() {
         return carset;
@@ -57,9 +75,13 @@ public class CarWashRecord {
     public String getDate() {
         return date;
     }
-    public String getTimeslot() {
-        return timeslot;
+    public String getTimeStart() {
+        return timestart;
     }
+    public String getTimeFinish() {
+        return timefinish;
+    }
+
     public List<Service> getServices() {
         return services;
     }
@@ -73,12 +95,13 @@ public class CarWashRecord {
         return currentaddress;
     }
 
-    public String getNoPlate() {
-        return noPlate;
+
+    public double getTotalServiceTime() {
+        return totalServiceTime;
     }
 
-    public void setNoPlate(String noPlate) {
-        this.noPlate = noPlate;
+    public void setTotalServiceTime(double totalServiceTime) {
+        this.totalServiceTime = totalServiceTime;
     }
 
     public void setCarsetJson(String carsetJson) {
@@ -98,8 +121,11 @@ public class CarWashRecord {
     public void setServices(List<Service> services) {
         this.services = services;
     }
-    public void setTimeslot(String timeslot) {
-        this.timeslot = timeslot;
+    public void setTimeStart(String timestart) {
+        this.timestart = timestart;
+    }
+    public void setTimeFinish(String timefinish) {
+        this.timefinish = timefinish;
     }
     public void setDate(String date) {
         this.date = date;
@@ -119,18 +145,13 @@ public class CarWashRecord {
     public void setCarName(String carName) {
         this.carName = carName;
     }
-
+    public void setNoPlate(String noPlate) {
+        this.noplate = noPlate;
+    }
     public void setAddress(String address) {
         this.address = address;
     }
 
-    public String getreceipt() {
-        return receipt;
-    }
-
-    public void setImageUri(String receipt) {
-        this.receipt = receipt;
-    }
 
     // Helper method to convert the list of services to a JSON string
     public static String convertServicesListToJson(List<Service> services) {
@@ -139,9 +160,9 @@ public class CarWashRecord {
     }
 
     // Helper method to convert a JSON string to a list of services
-    public static List<CarWashRecord> convertJsonToServicesList(String json) {
+    public static List<Service> convertJsonToServicesList(String json) {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<CarWashRecord>>(){}.getType();
+        Type type = new TypeToken<List<Service>>(){}.getType();
         return gson.fromJson(json, type);
     }
 

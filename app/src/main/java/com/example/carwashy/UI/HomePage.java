@@ -3,7 +3,6 @@ package com.example.carwashy.UI;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,38 +19,30 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-
-        // go to reward page
-
-
-        // go to reward page
         Button buttonreward = findViewById(R.id.buttonreward);
-        buttonreward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomePage.this, RewardPage.class);
-                startActivity(intent);
-            }
+        buttonreward.setOnClickListener(view -> {
+            Intent intent = new Intent(HomePage.this, RewardPage.class);
+            startActivity(intent);
         });
 
         // go to service page
         Button buttonservice = findViewById(R.id.buttonservice);
-        buttonservice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomePage.this, VehiclePage.class);
-                startActivity(intent);
-            }
+        buttonservice.setOnClickListener(view -> {
+            Intent intent = new Intent(HomePage.this, VehiclePage.class);
+            startActivity(intent);
         });
 
         // go to receipt page
         Button buttonstatus = findViewById(R.id.buttonstatus);
-        buttonstatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomePage.this, BookingStatusPage.class);
-                startActivity(intent);
-            }
+        buttonstatus.setOnClickListener(view -> {
+            Intent intent = new Intent(HomePage.this, BookingStatusPage.class);
+            startActivity(intent);
+        });
+
+        Button buttonrecord = findViewById(R.id.buttonrecord);
+        buttonrecord.setOnClickListener(view -> {
+            Intent intent = new Intent(HomePage.this, CarWashRecordPage.class);
+            startActivity(intent);
         });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);

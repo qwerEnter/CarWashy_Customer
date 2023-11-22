@@ -93,6 +93,11 @@ public class ReceiptPage extends AppCompatActivity {
             retrieveBookingInfoData(noPlate);
         }
 
+        serviceAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
+        RecyclerView rvcarset = findViewById(R.id.rvcarset);
+        rvcarset.setLayoutManager(new LinearLayoutManager(this));
+        rvcarset.setAdapter(serviceAdapter);
+
         receiptReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
 
         Button buttonsave = findViewById(R.id.buttonsave);
@@ -133,7 +138,7 @@ public class ReceiptPage extends AppCompatActivity {
                 String date = carwashrecInfo.getDate();
                 deleteBookingInfoItem(date, noPlate);
 
-                
+
                 // Show a Toast message indicating successful save
                 Toast.makeText(ReceiptPage.this, "Receipt Successfully Saved", Toast.LENGTH_SHORT).show();
 
@@ -152,8 +157,6 @@ public class ReceiptPage extends AppCompatActivity {
 
         });
 
-
-
         carwashrecInfo = new CarWashRecord();
 
         // Set OnClickListener for the imagecar
@@ -170,8 +173,6 @@ public class ReceiptPage extends AppCompatActivity {
                 launchGallery();
             }
         });
-
-
     }
 
     private void deleteBookingInfoItem(String date, String noPlate) {
@@ -249,20 +250,6 @@ public class ReceiptPage extends AppCompatActivity {
             }
         });
     }
-    private void updateRecyclerView(List<Service> services) {
-        // Find the RecyclerView
-        RecyclerView rvcarset = findViewById(R.id.rvcarset);
-
-        // Set up the RecyclerView with the ServiceAdapter
-        ServiceAdapter serviceAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
-        rvcarset.setLayoutManager(new LinearLayoutManager(ReceiptPage.this));
-        rvcarset.setAdapter(serviceAdapter);
-
-        // Update the serviceList in the adapter
-        serviceAdapter.setServiceList(services);
-        // Notify the adapter that the data has changed
-        serviceAdapter.notifyDataSetChanged();
-    }
     private void displayBookingInfo(BookingInfo receipt) {
         // Display the data on the UI
         final TextView textdate = findViewById(R.id.textdate);
@@ -305,6 +292,20 @@ public class ReceiptPage extends AppCompatActivity {
         // Update the RecyclerView
         updateRecyclerView(services);
         saveBookingInfoToSharedPreferences(receipt);
+    }
+    private void updateRecyclerView(List<Service> services) {
+        // Find the RecyclerView
+        RecyclerView rvcarset = findViewById(R.id.rvcarset);
+
+        // Set up the RecyclerView with the ServiceAdapter
+        ServiceAdapter serviceAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
+        rvcarset.setLayoutManager(new LinearLayoutManager(ReceiptPage.this));
+        rvcarset.setAdapter(serviceAdapter);
+
+        // Update the serviceList in the adapter
+        serviceAdapter.setServiceList(services);
+        // Notify the adapter that the data has changed
+        serviceAdapter.notifyDataSetChanged();
     }
     private void saveBookingInfoToSharedPreferences(BookingInfo receipt) {
         SharedPreferences preferences = getSharedPreferences("bookingServiceData", MODE_PRIVATE);

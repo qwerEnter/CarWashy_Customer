@@ -1,6 +1,7 @@
 
 package com.example.carwashy.UI;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +24,11 @@ import com.example.carwashy.Fragment.SessionDialogFragment;
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.Model.Service;
 import com.example.carwashy.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
@@ -36,12 +40,15 @@ import java.util.List;
 public class BookingPage extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, SessionDialogFragment.SessionDialogListener {
 
     private RecyclerView addedServicesRecyclerView;
+    private DatabaseReference sessionReference;
     private ServiceAdapter addedServicesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.booking);
+
+        sessionReference = FirebaseDatabase.getInstance().getReference("CarWashRecord");
 
         addedServicesRecyclerView = findViewById(R.id.rvcarset);
         addedServicesAdapter = new ServiceAdapter(new ArrayList<>(),getSupportFragmentManager());
@@ -98,6 +105,24 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
 
         Button bookingsession = findViewById(R.id.bookingsession);
         bookingsession.setOnClickListener(v -> showSessionDialog());
+
+        Button buttonviewsessions1 = findViewById(R.id.buttonviewsession1);
+        buttonviewsessions1.setOnClickListener(v -> {
+            String selectedDate = ((TextView) findViewById(R.id.textdate)).getText().toString();
+            getAllSessionsFromFirebase(selectedDate, "Session 1 ( 10AM - 2PM )");
+        });
+
+        Button buttonviewsessions2 = findViewById(R.id.buttonviewsession2);
+        buttonviewsessions2.setOnClickListener(v -> {
+            String selectedDate = ((TextView) findViewById(R.id.textdate)).getText().toString();
+            getAllSessionsFromFirebase(selectedDate, "Session 2 ( 2PM - 6PM )");
+        });
+
+        Button buttonviewsessions3 = findViewById(R.id.buttonviewsession3);
+        buttonviewsessions3.setOnClickListener(v -> {
+            String selectedDate = ((TextView) findViewById(R.id.textdate)).getText().toString();
+            getAllSessionsFromFirebase(selectedDate, "Session 3 ( 6PM - 10PM )");
+        });
 
     }
 
@@ -203,6 +228,66 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         TextView textsession = findViewById(R.id.textsession);
         textsession.setText(session);
     }
+
+    private void getAllSessionsFromFirebase(String selectedDate, String targetSession) {
+        List<BookingInfo> sessions = new ArrayList<>();
+
+        sessionReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BookingInfo session = snapshot.getValue(BookingInfo.class);
+                    if (session != null && session.getDate().equals(selectedDate) && session.getSession().equals(targetSession)) {
+                        sessions.add(session);
+                    }
+                }
+
+                showSessionsDialog(selectedDate, sessions);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
+    private void showSessionsDialog(String selectedDate, List<BookingInfo> sessions) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sessions for " + selectedDate);
+
+        List<BookingInfo> filteredSessions = filterSessionsByDate(sessions, selectedDate);
+
+        StringBuilder sessionInfo = new StringBuilder();
+        for (BookingInfo session : filteredSessions) {
+            sessionInfo.append("").append(session.getSession()).append("\n");
+            sessionInfo.append("No. Plate: ").append(session.getNoPlate()).append("\n");
+            sessionInfo.append("Time Start: ").append(session.getTimeStart()).append("\n");
+            sessionInfo.append("Time Finish: ").append(session.getTimeFinish()).append("\n\n\n");
+        }
+
+        if (sessionInfo.length() > 0) {
+            builder.setMessage(sessionInfo.toString());
+        } else {
+            builder.setMessage("No sessions found for the selected date.");
+        }
+
+        builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private List<BookingInfo> filterSessionsByDate(List<BookingInfo> sessions, String selectedDate) {
+        List<BookingInfo> filteredSessions = new ArrayList<>();
+
+        for (BookingInfo session : sessions) {
+            if (session.getDate().equals(selectedDate)) {
+                filteredSessions.add(session);
+            }
+        }
+
+        return filteredSessions;
+    }
+
 
 
     private void saveBookingInfoToFirebase(BookingInfo bookingInfo) {

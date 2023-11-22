@@ -149,6 +149,23 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     context.startActivity(intent);
                 }
             });
+            buttonRebook.setOnClickListener(view -> {
+                BookingInfo currentItem = bookingstatusList.get(getAdapterPosition());
+
+                // Check if currentItem is not null
+                if (currentItem != null) {
+                    // Get the noPlate value
+                    String noPlate = currentItem.getNoPlate();
+                    String date = currentItem.getDate();
+
+                    // Save the noPlate value to SharedPreferences
+                    saveNoPlateToSharedPreferencesRebook(context, noPlate, date);
+
+                    // Start the ReceiptPage activity
+                    Intent intent = new Intent(context, ReBookPage.class);
+                    context.startActivity(intent);
+                }
+            });
 
             buttonCancel.setOnClickListener(view -> {
                 int adapterPosition = getAdapterPosition();
@@ -219,9 +236,74 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     }
                 }
             });
-            buttonRebook.setOnClickListener(view -> {
-                Intent intent = new Intent(context, ReBookPage.class);
-                context.startActivity(intent);
+            buttonDelete.setOnClickListener(view -> {
+                int adapterPosition = getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION && adapterPosition < bookingstatusList.size()) {
+                    BookingInfo currentItem = bookingstatusList.get(adapterPosition);
+
+                    if (currentItem != null) {
+                        // Show a confirmation dialog
+                        new AlertDialog.Builder(context)
+                                .setTitle("Booking Cancellation")
+                                .setMessage("Are you sure you want to cancel this booking?")
+                                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                                    // User clicked Yes, proceed with cancellation
+                                    String date = currentItem.getDate();
+                                    String noPlate = currentItem.getNoPlate();
+
+                                    databaseReference.orderByChild("date").equalTo(date).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            List<DataSnapshot> snapshotsToRemove = new ArrayList<>();
+
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                                                if (bookingInfo != null && noPlate.equals(bookingInfo.getNoPlate())) {
+                                                    snapshotsToRemove.add(snapshot);
+                                                }
+                                            }
+
+                                            // Remove the entries from the database
+                                            for (DataSnapshot snapshotToRemove : snapshotsToRemove) {
+                                                snapshotToRemove.getRef().removeValue().addOnCompleteListener(task -> {
+                                                    if (task.isSuccessful()) {
+                                                        // Entry removed successfully
+                                                        // Check if adapterPosition is still valid before updating the UI
+                                                        if (adapterPosition < bookingstatusList.size()) {
+                                                            // Notify the adapter about the removal
+                                                            bookingstatusList.remove(adapterPosition);
+                                                            notifyItemRemoved(adapterPosition);
+                                                            Log.d("Firebase", "Successfully removed data");
+
+                                                            // Redirect to the same page (refresh the current activity)
+                                                            Intent intent = new Intent(context, context.getClass());
+                                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                            context.startActivity(intent);
+                                                        }
+                                                    } else {
+                                                        // Handle failure
+                                                        if (task.getException() != null) {
+                                                            Log.e("Firebase", "Error removing data: " + task.getException());
+                                                        } else {
+                                                            Log.e("Firebase", "Error removing data: Unknown error");
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            // Handle errors
+                                            Log.e("Firebase", "Error querying data: " + databaseError.getMessage());
+                                        }
+                                    });
+                                })
+                                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                                    // User clicked No, do nothing
+                                    dialog.dismiss();
+                                })
+                                .show();
+                    }
+                }
             });
         }
     }
@@ -232,6 +314,16 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
         // Save the noPlate value to SharedPreferences
         editor.putString("noPlate", noPlate);
+        editor.apply();
+    }
+
+    private void saveNoPlateToSharedPreferencesRebook(Context context,String noPlate,String date) {
+        SharedPreferences preferences = context.getSharedPreferences("dataRebook", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Save the noPlate value to SharedPreferences
+        editor.putString("noPlate", noPlate);
+        editor.putString("date", date);
         editor.apply();
     }
 

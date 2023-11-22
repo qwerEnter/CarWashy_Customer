@@ -66,10 +66,7 @@ public class BookingStatusPage extends AppCompatActivity {
             }
             return false;
         });
-
-
     }
-
 
     private void retrieveBookingStatusData() {
         DatabaseReference statusReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
@@ -93,7 +90,6 @@ public class BookingStatusPage extends AppCompatActivity {
             }
         });
     }
-
 
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -51,8 +51,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         holder.noplate.setText(status.getNoPlate());
         holder.status.setText(status.getStatus());
         holder.bookingdate.setText(status.getDate());
-        holder.timestart.setText(status.getTimeStart());
-        holder.timefinish.setText(status.getTimeFinish());
+        holder.session.setText(status.getSession());
 
         // Show/hide buttons based on the status
         if ("Available".equals(status.getStatus())) {
@@ -106,7 +105,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView noplate, status, bookingdate,timestart,timefinish;
+        TextView noplate, status, bookingdate,session;
         private Context context;
         CardView cardViewWaze,cardViewValet;
         Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook;
@@ -118,8 +117,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             noplate = itemView.findViewById(R.id.noplate);
             status = itemView.findViewById(R.id.status);
             bookingdate = itemView.findViewById(R.id.bookingdate);
-            timestart = itemView.findViewById(R.id.timestart);
-            timefinish = itemView.findViewById(R.id.timefinish);
+            session = itemView.findViewById(R.id.session);
             cardViewWaze = itemView.findViewById(R.id.cardViewWaze);
             cardViewValet = itemView.findViewById(R.id.cardViewValet);
 

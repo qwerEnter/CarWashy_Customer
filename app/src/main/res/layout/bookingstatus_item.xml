@@ -103,22 +103,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/timestart"
+                android:id="@+id/session"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="9dp"
-                android:layout_toEndOf="@+id/dot2"
-                android:text="NONE"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/timefinish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/noplate"
-                android:layout_marginStart="76dp"
                 android:layout_marginTop="9dp"
                 android:layout_toEndOf="@+id/dot2"
                 android:text="NONE"

@@ -1,6 +1,7 @@
 package com.example.carwashy.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Model.CarWashRecord;
 import com.example.carwashy.R;
+import com.example.carwashy.UI.RecordDetails;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -23,8 +25,9 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
     private List<CarWashRecord> carwashrecordList;
     private Context context;
 
-    public CarWashRecordAdapter(List<CarWashRecord> carwashrecordList) {
+    public CarWashRecordAdapter(List<CarWashRecord> carwashrecordList, Context context) {
         this.carwashrecordList = carwashrecordList;
+        this.context = context;
     }
 
     @NonNull
@@ -32,6 +35,7 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
     public CarWashRecordAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.carwashrecord_item, parent, false);
         return new ViewHolder(view, parent.getContext());
+
     }
 
     @Override
@@ -64,6 +68,7 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
             holder.cardViewWaze.setVisibility(View.GONE);
             holder.cardViewValet.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
@@ -92,15 +97,21 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
             timefinish = itemView.findViewById(R.id.timefinish);
             cardViewWaze = itemView.findViewById(R.id.cardViewWaze);
             cardViewValet = itemView.findViewById(R.id.cardViewValet);
-
-            buttonView = itemView.findViewById(R.id.buttonview);
             buttonVerify = itemView.findViewById(R.id.buttonverify);
-
 
             databaseReference = FirebaseDatabase.getInstance().getReference("CarWashRecord");
 
+            buttonView = itemView.findViewById(R.id.buttonview);
+            buttonView.setOnClickListener(view -> {
+                    Intent intent = new Intent(context, RecordDetails.class);
+                    context.startActivity(intent);
+
+            });
 
         }
+
+
+
     }
 
     private boolean isValetNone(CarWashRecord carwashrecord) {

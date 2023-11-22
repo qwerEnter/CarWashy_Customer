@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".UI.RecordDetails">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:foregroundGravity="center"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/searchlicense"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/black"
+            android:hint="   Search by license plate"
+            android:textSize="15dp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="244dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginRight="0dp"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="30dp"
+                android:text="NO.PLATE"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="28dp"
+                android:layout_toEndOf="@+id/text1"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/noplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="29dp"
+                android:layout_toEndOf="@+id/dot1"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text1"
+                android:layout_alignStart="@+id/text1"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:text="CAR NAME"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot1"
+                android:layout_alignStart="@+id/dot1"
+                android:layout_alignEnd="@+id/dot1"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/carname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noplate"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="11dp"
+                android:layout_toEndOf="@+id/dot2"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text2"
+                android:layout_alignStart="@+id/text2"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:text="TOTAL COST"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot2"
+                android:layout_alignStart="@+id/dot2"
+                android:layout_alignEnd="@+id/dot2"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/carname"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/dot3"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/text3"
+                android:layout_alignStart="@+id/text3"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:text="PREMISE"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot4"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/dot3"
+                android:layout_alignStart="@+id/dot3"
+                android:layout_alignEnd="@+id/dot3"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text4"
+                android:layout_alignStart="@+id/text4"
+                android:layout_marginStart="0dp"
+                android:text="VALET"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text4"
+                android:layout_alignStart="@+id/text4"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="35dp"
+                android:text="PICKUP ADDRESS"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text4"
+                android:layout_alignStart="@+id/text4"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="70dp"
+                android:text="PHONE NUM."
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot4"
+                android:layout_alignStart="@+id/dot4"
+                android:layout_alignEnd="@+id/dot4"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot4"
+                android:layout_alignStart="@+id/dot4"
+                android:layout_alignEnd="@+id/dot4"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="33dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot52"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot4"
+                android:layout_alignStart="@+id/dot4"
+                android:layout_alignEnd="@+id/dot4"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="69dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/text6"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_below="@+id/text5"
+                android:layout_alignStart="@+id/text5"
+                android:layout_marginStart="-2dp"
+                android:layout_marginTop="85dp"
+                android:text="SERVICE"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dot6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/dot5"
+                android:layout_alignStart="@+id/dot5"
+                android:layout_alignEnd="@+id/dot5"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="82dp"
+                android:layout_marginEnd="0dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/cost"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="11dp"
+                android:layout_toEndOf="@+id/dot4"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/valet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/dot5"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/useraddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="34dp"
+                android:layout_toEndOf="@+id/dot5"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/usercurrentphone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/address"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="69dp"
+                android:layout_toEndOf="@+id/dot5"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvcarset"
+                android:layout_width="143dp"
+                android:layout_height="95dp"
+                android:layout_below="@+id/valet"
+                android:layout_marginStart="81dp"
+                android:layout_marginLeft="180dp"
+                android:layout_marginTop="71dp"
+                android:layout_toEndOf="@+id/text6"
+                android:text="Calculating .."
+                android:textSize="15dp" />
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imagereceipt"
+            android:layout_width="110dp"
+            android:layout_height="100dp"
+            android:hint="    * receipt.pdf *"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/upload_icon"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/textsession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="20dp"
+            android:text="Session"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="140dp"
+            android:layout_marginBottom="20dp"
+            android:text="Status"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="120dp"
+            android:layout_marginBottom="20dp"
+            android:text="Date"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:layout_marginBottom="160dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="200dp"
+        app:cardElevation="10dp"
+        android:backgroundTint="#00CF00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

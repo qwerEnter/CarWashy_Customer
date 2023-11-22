@@ -1,6 +1,7 @@
 package com.example.carwashy.UI;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class CarWashRecordPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CarWashRecordAdapter carwashrecordAdapter;
     private List<CarWashRecord> carwashrecordList;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class CarWashRecordPage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         carwashrecordList = new ArrayList<>();
-        carwashrecordAdapter = new CarWashRecordAdapter(carwashrecordList);
+        carwashrecordAdapter = new CarWashRecordAdapter(carwashrecordList,context);
         recyclerView.setAdapter(carwashrecordAdapter);
 
         retrieveBookingStatusData();

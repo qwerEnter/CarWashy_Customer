@@ -19,6 +19,7 @@ import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.R;
 import com.example.carwashy.UI.ReBookPage;
 import com.example.carwashy.UI.ReceiptPage;
+import com.example.carwashy.UI.ReceiptPage2;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
+            holder.buttonVerify.setVisibility(View.GONE);
         }
         else if ("Pending".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
@@ -67,13 +69,15 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
+            holder.buttonVerify.setVisibility(View.GONE);
         }
-        else if ("Payment Verified".equals(status.getStatus())) {
+        else if ("Paid".equals(status.getStatus())) {
             holder.buttonPay.setVisibility(View.GONE);
             holder.buttonCancel.setVisibility(View.GONE);
-            holder.buttonView.setVisibility(View.VISIBLE);
+            holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.GONE);
             holder.buttonRebook.setVisibility(View.GONE);
+            holder.buttonVerify.setVisibility(View.VISIBLE);
         }
 
         else if ("Full Slot".equals(status.getStatus())) {
@@ -82,7 +86,18 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             holder.buttonView.setVisibility(View.GONE);
             holder.buttonDelete.setVisibility(View.VISIBLE);
             holder.buttonRebook.setVisibility(View.VISIBLE);
+            holder.buttonVerify.setVisibility(View.GONE);
         }
+
+        else if ("Payment Verified".equals(status.getStatus())) {
+            holder.buttonPay.setVisibility(View.GONE);
+            holder.buttonCancel.setVisibility(View.GONE);
+            holder.buttonView.setVisibility(View.VISIBLE);
+            holder.buttonDelete.setVisibility(View.GONE);
+            holder.buttonRebook.setVisibility(View.GONE);
+            holder.buttonVerify.setVisibility(View.GONE);
+        }
+
 
         BookingInfo currentItem = bookingstatusList.get(position);
 
@@ -108,7 +123,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         TextView noplate, status, bookingdate,session;
         private Context context;
         CardView cardViewWaze,cardViewValet;
-        Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook;
+        Button buttonPay,buttonCancel,buttonView,buttonDelete, buttonRebook, buttonVerify;
         DatabaseReference databaseReference; // Add this reference
 
 
@@ -129,6 +144,26 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonCancel = itemView.findViewById(R.id.buttoncancel);
             buttonDelete = itemView.findViewById(R.id.buttondelete);
+            buttonVerify = itemView.findViewById(R.id.buttonverify);
+
+            buttonVerify.setOnClickListener(view -> {
+                // Get the current BookingInfo object
+                BookingInfo currentItem = bookingstatusList.get(getAdapterPosition());
+
+                // Check if currentItem is not null
+                if (currentItem != null) {
+                    // Get the noPlate value
+                    String noPlate = currentItem.getNoPlate();
+                    String date = currentItem.getDate();
+
+                    // Save the noPlate value to SharedPreferences
+                    saveNoPlateToSharedPreferences(context, noPlate, date);
+
+                    // Start the ReceiptPage activity
+                    Intent intent = new Intent(context, ReceiptPage2.class);
+                    context.startActivity(intent);
+                }
+            });
 
             buttonPay.setOnClickListener(view -> {
                 // Get the current BookingInfo object
@@ -138,9 +173,10 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                 if (currentItem != null) {
                     // Get the noPlate value
                     String noPlate = currentItem.getNoPlate();
+                    String date = currentItem.getDate();
 
                     // Save the noPlate value to SharedPreferences
-                    saveNoPlateToSharedPreferences(context, noPlate);
+                    saveNoPlateToSharedPreferences(context, noPlate, date);
 
                     // Start the ReceiptPage activity
                     Intent intent = new Intent(context, ReceiptPage.class);
@@ -157,7 +193,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
                     String date = currentItem.getDate();
 
                     // Save the noPlate value to SharedPreferences
-                    saveNoPlateToSharedPreferencesRebook(context, noPlate, date);
+                    saveNoPlateToSharedPreferences(context, noPlate, date);
 
                     // Start the ReceiptPage activity
                     Intent intent = new Intent(context, ReBookPage.class);
@@ -306,17 +342,9 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
         }
     }
 
-    private void saveNoPlateToSharedPreferences(Context context, String noPlate) {
-        SharedPreferences preferences = context.getSharedPreferences("dataNoplate", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
 
-        // Save the noPlate value to SharedPreferences
-        editor.putString("noPlate", noPlate);
-        editor.apply();
-    }
-
-    private void saveNoPlateToSharedPreferencesRebook(Context context,String noPlate,String date) {
-        SharedPreferences preferences = context.getSharedPreferences("dataRebook", Context.MODE_PRIVATE);
+    private void saveNoPlateToSharedPreferences(Context context,String noPlate,String date) {
+        SharedPreferences preferences = context.getSharedPreferences("dataBookingStatus", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         // Save the noPlate value to SharedPreferences

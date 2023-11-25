@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CarWashy"
         tools:targetApi="31">
         <activity
+            android:name=".UI.ReceiptPage2"
+            android:exported="false" />
+        <activity
             android:name=".UI.RecordDetails"
             android:exported="false" />
         <activity

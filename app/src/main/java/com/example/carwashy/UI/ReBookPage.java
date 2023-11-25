@@ -37,7 +37,7 @@ public class ReBookPage extends AppCompatActivity implements DatePickerDialog.On
         bookingInfoReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
 
         // Retrieve the noPlate and date values from SharedPreferences
-        SharedPreferences preferences = getSharedPreferences("dataRebook", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("dataBookingStatus", MODE_PRIVATE);
         String noPlate = preferences.getString("noPlate", "");
         String date = preferences.getString("date", "");
 

@@ -10,6 +10,7 @@ import java.util.List;
 public class BookingInfo {
 
     private String noplate;
+    private String receipt;
     private List<Service> carset;
     private String valet;
     private String totalcost;
@@ -40,12 +41,12 @@ public class BookingInfo {
         this.date = date;
         this.session = session;
         this.timestart = "Pending";
-        this.timefinish = "";
+        this.timefinish = "Pending";
         this.phone = "-";
         this.currentaddress = "-";
         this.totalServiceTime =totalServiceTime;
         this.services = services;
-    }
+        this.receipt = receipt;}
 
     public String getCarsetJson() {
         Gson gson = new Gson();
@@ -94,16 +95,20 @@ public class BookingInfo {
     public String getCurrentaddress() {
         return currentaddress;
     }
-
-
     public double getTotalServiceTime() {
         return totalServiceTime;
     }
+    public String getReceipt() {
+        return receipt;
+    }
 
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
+    }
     public void setTotalServiceTime(double totalServiceTime) {
         this.totalServiceTime = totalServiceTime;
     }
-
     public void setCarsetJson(String carsetJson) {
         Gson gson = new Gson();
         Type type = new TypeToken<List<Service>>(){}.getType();

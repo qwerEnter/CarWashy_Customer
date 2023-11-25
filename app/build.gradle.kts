@@ -59,5 +59,6 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("com.google.firebase:firebase-storage:16.0.4")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 
 }

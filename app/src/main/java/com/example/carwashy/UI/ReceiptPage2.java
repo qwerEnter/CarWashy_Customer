@@ -45,45 +45,45 @@ public class ReceiptPage2 extends AppCompatActivity {
         textdate.setText(date);
         textnoplate.setText(noPlate);
 
-        // Query the database to get the image URL
-        receiptReference.orderByChild("noPlate").equalTo(noPlate).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
-                    if (bookingInfo != null && bookingInfo.getDate().equals(date)) {
-                        String receipt = bookingInfo.getReceipt();
-                        String date = bookingInfo.getDate();
-                        String noPlate = bookingInfo.getNoPlate();
-                        String session = bookingInfo.getSession();
-
-                        // Check if the receipt URL is not empty or "-"
-                        if (!"".equals(receipt))
-                        {
-                            Log.d("ReceiptPage2", "Receipt URL: " + receipt);
-                            Log.d("ReceiptPage2", "Receipt date: " + date);
-                            Log.d("ReceiptPage2", "Receipt noPlate: " + noPlate);
-                            Log.d("ReceiptPage2", "Receipt session: " + session);
-                            Picasso.get().load(receipt).into(imagereceipt);
-                            Toast.makeText(ReceiptPage2.this, "Receipt  found", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-
-                            Toast.makeText(ReceiptPage2.this, "Receipt not found", Toast.LENGTH_SHORT).show();
-                        }
-                        return;
-                    }
-                }
-                // No matching data found
-                Toast.makeText(ReceiptPage2.this, "Data not found for retrieval", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors
-                Toast.makeText(ReceiptPage2.this, "Error retrieving data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        retrievereceipt();
     }
+
+
+    private void retrievereceipt() {
+        receiptReference.orderByChild("noPlate").equalTo(noPlate).addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                if (bookingInfo != null && bookingInfo.getDate().equals(date)) {
+                    String receipt = bookingInfo.getReceipt();
+
+                    // Check if the receipt URL is not empty or "-"
+                    if (!"".equals(receipt))
+                    {
+                        Log.d("ReceiptPage2", "Receipt URL: " + receipt);
+                        Picasso.get().load(receipt).into(imagereceipt);
+                        Toast.makeText(ReceiptPage2.this, "Receipt  found", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+
+                        Toast.makeText(ReceiptPage2.this, "Receipt not found", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                }
+            }
+            // No matching data found
+            Toast.makeText(ReceiptPage2.this, "Data not found for retrieval", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+            // Handle errors
+            Toast.makeText(ReceiptPage2.this, "Error retrieving data: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    });
+    }
+
+
 }

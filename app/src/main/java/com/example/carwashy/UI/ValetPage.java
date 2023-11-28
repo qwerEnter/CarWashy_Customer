@@ -1,22 +1,19 @@
 package com.example.carwashy.UI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.carwashy.Adapter.PremiseAdapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.carwashy.Adapter.ValetAdapter;
-import com.example.carwashy.Model.Premise;
 import com.example.carwashy.Model.Valet;
 import com.example.carwashy.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -87,6 +84,7 @@ public class ValetPage extends AppCompatActivity {
 
         // Save the data to SharedPreferences
         editor.putString("name", valet.getName());
+        editor.putString("phonenumber", valet.getPhonenumber());
 
         // Apply the changes
         editor.apply();

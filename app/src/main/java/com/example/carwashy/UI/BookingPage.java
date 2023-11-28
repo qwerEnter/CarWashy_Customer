@@ -69,11 +69,12 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             bookingInfo.setCarName(((TextView) findViewById(R.id.carname)).getText().toString());
             bookingInfo.setTotalcost(((TextView) findViewById(R.id.cost)).getText().toString());
             bookingInfo.setValet(((TextView) findViewById(R.id.valet)).getText().toString());
+            bookingInfo.setValetPhone(((TextView) findViewById(R.id.valetphonenum)).getText().toString());
             bookingInfo.setAddress(((TextView) findViewById(R.id.address)).getText().toString());
             bookingInfo.setDate(((TextView) findViewById(R.id.textdate)).getText().toString());
             bookingInfo.setSession(((TextView) findViewById(R.id.textsession)).getText().toString());
-            bookingInfo.setPhone(((TextView) findViewById(R.id.usercurrentphone)).getText().toString());
-            bookingInfo.setCurrentaddress(((TextView) findViewById(R.id.useraddress)).getText().toString());
+            bookingInfo.setPhone(((TextView) findViewById(R.id.customerphonenum)).getText().toString());
+            bookingInfo.setCurrentaddress(((TextView) findViewById(R.id.customeraddress)).getText().toString());
 
             // Retrieve and set the list of services from SharedPreferencesC
             List<Service> addedServices = new ArrayList<>();
@@ -191,15 +192,18 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         SharedPreferences preferencesD = getSharedPreferences("ServicePageDataD", Context.MODE_PRIVATE);
 
         TextView name = findViewById(R.id.valet);
+        TextView phonenumber = findViewById(R.id.valetphonenum);
         String nameTextView = preferencesD.getString("name", "-");
+        String phonenumTextView = preferencesD.getString("phonenumber", "-");
 
         name.setText(nameTextView);
+        phonenumber.setText(phonenumTextView);
     }
     private void retrieveDataFromSharedPreferencesE() {
         SharedPreferences preferencesE = getSharedPreferences("ServicePageDataE", Context.MODE_PRIVATE);
 
-        TextView userPhone = findViewById(R.id.usercurrentphone);
-        TextView userAddress = findViewById(R.id.useraddress);
+        TextView userPhone = findViewById(R.id.customerphonenum);
+        TextView userAddress = findViewById(R.id.customeraddress);
 
         String userphoneNumber = preferencesE.getString("phone", "-");
         String uservaletAddress = preferencesE.getString("currentaddress", "-");

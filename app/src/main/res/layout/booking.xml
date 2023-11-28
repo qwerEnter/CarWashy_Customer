@@ -262,7 +262,7 @@
           android:layout_below="@+id/text4"
           android:layout_alignStart="@+id/text4"
           android:layout_marginStart="0dp"
-          android:text="VALET"
+          android:text="VALET DETAILS"
           android:textColor="@color/black"
           android:textStyle="bold" />
 
@@ -273,7 +273,7 @@
           android:layout_below="@+id/text4"
           android:layout_alignStart="@+id/text4"
           android:layout_marginStart="0dp"
-          android:layout_marginTop="35dp"
+          android:layout_marginTop="45dp"
           android:text="PICKUP ADDRESS"
           android:textColor="@color/black"
           android:textStyle="bold" />
@@ -311,7 +311,7 @@
           android:layout_alignStart="@+id/dot4"
           android:layout_alignEnd="@+id/dot4"
           android:layout_marginStart="0dp"
-          android:layout_marginTop="33dp"
+          android:layout_marginTop="43dp"
           android:layout_marginEnd="0dp"
           android:text=":"
           android:textColor="@color/black"
@@ -380,18 +380,29 @@
           android:textColor="@color/black" />
 
       <TextView
-          android:id="@+id/useraddress"
+          android:id="@+id/valetphonenum"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/address"
           android:layout_marginStart="16dp"
-          android:layout_marginTop="34dp"
+          android:layout_marginTop="20dp"
           android:layout_toEndOf="@+id/dot5"
           android:text="NONE"
           android:textColor="@color/black" />
 
       <TextView
-          android:id="@+id/usercurrentphone"
+          android:id="@+id/customeraddress"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/valetphonenum"
+          android:layout_marginStart="16dp"
+          android:layout_marginTop="8dp"
+          android:layout_toEndOf="@+id/dot5"
+          android:text="NONE"
+          android:textColor="@color/black" />
+
+      <TextView
+          android:id="@+id/customerphonenum"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/address"

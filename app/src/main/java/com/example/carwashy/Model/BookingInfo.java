@@ -20,7 +20,8 @@ public class BookingInfo {
     private String date;
     private String session;
     private String timestart;
-    private String phone;
+    private String customerphone;
+    private String valetphone;
     private String carsetJson;
     private String currentaddress;
     private double totalServiceTime;
@@ -42,8 +43,9 @@ public class BookingInfo {
         this.session = session;
         this.timestart = "Pending";
         this.timefinish = "Pending";
-        this.phone = "-";
-        this.currentaddress = "-";
+        this.customerphone = "NONE";
+        this.valetphone = "NONE";
+        this.currentaddress = "NONE";
         this.totalServiceTime =totalServiceTime;
         this.services = services;
         this.receipt = receipt;}
@@ -87,7 +89,10 @@ public class BookingInfo {
         return services;
     }
     public String getPhone() {
-        return phone;
+        return customerphone;
+    }
+    public String getValetPhone() {
+        return valetphone;
     }
     public String getSession() {
         return session;
@@ -114,8 +119,11 @@ public class BookingInfo {
         Type type = new TypeToken<List<Service>>(){}.getType();
         carset = gson.fromJson(carsetJson, type);
     }
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String customerphone) {
+        this.customerphone = customerphone;
+    }
+    public void setValetPhone(String valetphone) {
+        this.valetphone = valetphone;
     }
     public void setCurrentaddress(String currentaddress) {
         this.currentaddress = currentaddress;

@@ -9,38 +9,60 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:foregroundGravity="center"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/searchlicense"
-            android:layout_width="180dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:backgroundTint="@color/black"
-            android:hint="   Search by license plate"
-            android:textSize="15dp" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="244dp"
+        android:layout_marginTop="84dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/bookingdate"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/baseline_book_online_24"
+            android:text="Open Date Picker"
+            app:layout_constraintHorizontal_bias="0.489" />
+
+        <Button
+            android:id="@+id/bookingsession"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="top"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="85dp"
+            android:background="@drawable/baseline_wb_sunny_24"
+            android:text="Open Date Picker"
+            app:layout_constraintHorizontal_bias="0.489" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:text="Select Booking Date"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/session"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="90dp"
+            android:layout_marginBottom="20dp"
+            android:text="Select Booking Session"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
 
         <RelativeLayout
@@ -48,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="360dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="130dp"
             android:layout_marginRight="0dp"
             android:padding="20dp">
 
@@ -56,11 +78,47 @@
                 android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
+                android:layout_marginLeft="45dp"
                 android:layout_marginTop="30dp"
                 android:text="NO.PLATE"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:layout_marginTop="2dp"
+                android:text="TIME SESSION"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="155dp"
+                android:layout_marginTop="2dp"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/timestart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="175dp"
+                android:layout_marginTop="3dp"
+                android:text="NONE"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/timefinish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="250dp"
+                android:layout_marginTop="3dp"
+                android:text="NONE"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/dot1"
@@ -186,12 +244,12 @@
 
             <TextView
                 android:id="@+id/text5"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text4"
                 android:layout_alignStart="@+id/text4"
                 android:layout_marginStart="0dp"
-                android:text="VALET"
+                android:text="VALET DETAILS"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -202,20 +260,8 @@
                 android:layout_below="@+id/text4"
                 android:layout_alignStart="@+id/text4"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="45dp"
                 android:text="PICKUP ADDRESS"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text52"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text4"
-                android:layout_alignStart="@+id/text4"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="70dp"
-                android:text="PHONE NUM."
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -226,8 +272,7 @@
                 android:layout_below="@+id/dot4"
                 android:layout_alignStart="@+id/dot4"
                 android:layout_alignEnd="@+id/dot4"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginTop="5dp"
                 android:text=":"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
@@ -240,21 +285,7 @@
                 android:layout_alignStart="@+id/dot4"
                 android:layout_alignEnd="@+id/dot4"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="0dp"
-                android:text=":"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/dot52"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dot4"
-                android:layout_alignStart="@+id/dot4"
-                android:layout_alignEnd="@+id/dot4"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="69dp"
+                android:layout_marginTop="43dp"
                 android:layout_marginEnd="0dp"
                 android:text=":"
                 android:textColor="@color/black"
@@ -264,11 +295,10 @@
             <TextView
                 android:id="@+id/text6"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/text5"
                 android:layout_alignStart="@+id/text5"
-                android:layout_marginStart="-2dp"
-                android:layout_marginTop="85dp"
+                android:layout_marginTop="65dp"
                 android:text="SERVICE"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
@@ -309,23 +339,23 @@
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/useraddress"
+                android:id="@+id/valetphonenum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/address"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="34dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_toEndOf="@+id/dot5"
                 android:text="NONE"
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/usercurrentphone"
+                android:id="@+id/customeraddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/address"
+                android:layout_below="@+id/valetphonenum"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="69dp"
+                android:layout_marginTop="14dp"
                 android:layout_toEndOf="@+id/dot5"
                 android:text="NONE"
                 android:textColor="@color/black" />
@@ -345,65 +375,68 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/imagereceipt"
-            android:layout_width="110dp"
-            android:layout_height="100dp"
-            android:hint="    * receipt.pdf *"
-            android:layout_marginTop="0dp"
-            android:background="@drawable/upload_icon"
-            android:layout_gravity="center_horizontal"/>
-
-        <TextView
-            android:id="@+id/textsession"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="140dp"
-            android:layout_marginBottom="20dp"
-            android:text="Session"
-            android:textSize="13dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="140dp"
-            android:layout_marginBottom="20dp"
-            android:text="Status"
-            android:textSize="13dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginBottom="20dp"
-            android:text="Date"
-            android:textSize="13dp"
-            android:textStyle="bold" />
-
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
-        android:layout_width="300dp"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#03A9F4"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="200dp"
         app:cardElevation="10dp"
-        android:backgroundTint="#00CF00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView">
+        android:layout_marginLeft="160dp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView3"
+        app:layout_constraintStart_toStartOf="@+id/cardView3"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
+        <Button
+            android:id="@+id/buttoncwc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:backgroundTint="#03A9F4"
+            android:text="CONTACT CENTER"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#03A9F4"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="200dp"
+        app:cardElevation="10dp"
+        android:layout_marginRight="160dp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView3"
+        app:layout_constraintStart_toStartOf="@+id/cardView3"
+        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+        <Button
+            android:id="@+id/buttonvalet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:backgroundTint="#03A9F4"
+            android:text="CONTACT      VALET"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:itemTextColor="@drawable/selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/BottomNavigationView"
+        app:menu="@menu/bottom_navigation_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

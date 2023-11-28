@@ -19,7 +19,8 @@ public class CarWashRecord {
     private String date;
     private String session;
     private String timestart;
-    private String phone;
+    private String customerphone;
+    private String valetphone;
     private String carsetJson;
     private String currentaddress;
     private double totalServiceTime;
@@ -41,7 +42,8 @@ public class CarWashRecord {
         this.session = session;
         this.timestart = "Pending";
         this.timefinish = "";
-        this.phone = "-";
+        this.customerphone = "NONE";
+        this.valetphone = "NONE";
         this.currentaddress = "-";
         this.totalServiceTime =totalServiceTime;
         this.services = services;
@@ -81,12 +83,14 @@ public class CarWashRecord {
     public String getTimeFinish() {
         return timefinish;
     }
-
     public List<Service> getServices() {
         return services;
     }
     public String getPhone() {
-        return phone;
+        return customerphone;
+    }
+    public String getValetPhone() {
+        return valetphone;
     }
     public String getSession() {
         return session;
@@ -94,23 +98,25 @@ public class CarWashRecord {
     public String getCurrentaddress() {
         return currentaddress;
     }
-
-
     public double getTotalServiceTime() {
         return totalServiceTime;
     }
 
+
+
     public void setTotalServiceTime(double totalServiceTime) {
         this.totalServiceTime = totalServiceTime;
     }
-
     public void setCarsetJson(String carsetJson) {
         Gson gson = new Gson();
         Type type = new TypeToken<List<Service>>(){}.getType();
         carset = gson.fromJson(carsetJson, type);
     }
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhone(String customerphone) {
+        this.customerphone = customerphone;
+    }
+    public void setValetPhone(String valetphone) {
+        this.valetphone = valetphone;
     }
     public void setCurrentaddress(String currentaddress) {
         this.currentaddress = currentaddress;

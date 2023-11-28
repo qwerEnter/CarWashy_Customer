@@ -2,6 +2,7 @@ package com.example.carwashy.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,18 +98,37 @@ public class CarWashRecordAdapter extends RecyclerView.Adapter<CarWashRecordAdap
 
             buttonView = itemView.findViewById(R.id.buttonview);
             buttonView.setOnClickListener(view -> {
+                CarWashRecord currentItem = carwashrecordList.get(getAdapterPosition());
+
+                // Check if currentItem is not null
+                if (currentItem != null) {
+                    // Get the noPlate value
+                    String noPlate = currentItem.getNoPlate();
+                    String date = currentItem.getDate();
+
+                    // Save the noPlate value to SharedPreferences
+                    saveNoPlateToSharedPreferences(context, noPlate, date);
+
+                    // Start the ReceiptPage activity
                     Intent intent = new Intent(context, RecordDetails.class);
                     context.startActivity(intent);
-
+                }
             });
 
         }
-
-
-
     }
 
     private boolean isValetNone(CarWashRecord carwashrecord) {
         return carwashrecord != null && "-".equals(carwashrecord.getValet());
+    }
+
+    private void saveNoPlateToSharedPreferences(Context context,String noPlate,String date) {
+        SharedPreferences preferences = context.getSharedPreferences("dataBookingRecord", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Save the noPlate value to SharedPreferences
+        editor.putString("noPlate", noPlate);
+        editor.putString("date", date);
+        editor.apply();
     }
 }

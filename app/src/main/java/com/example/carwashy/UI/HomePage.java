@@ -82,7 +82,6 @@ public class HomePage extends AppCompatActivity {
         });
         builder.show();
     }
-
     private void performLogout() {
         // Add your logout logic here
         // For example, if you are using Firebase Authentication:

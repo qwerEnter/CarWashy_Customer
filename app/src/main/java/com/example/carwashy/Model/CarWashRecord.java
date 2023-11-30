@@ -43,7 +43,7 @@ public class CarWashRecord {
         this.timestart = "Pending";
         this.timefinish = "";
         this.customerphone = "NONE";
-        this.valetphone = "NONE";
+        this.valetphone = valetphone;
         this.currentaddress = "-";
         this.totalServiceTime =totalServiceTime;
         this.services = services;

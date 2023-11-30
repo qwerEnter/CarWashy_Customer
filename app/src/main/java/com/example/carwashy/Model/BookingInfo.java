@@ -44,7 +44,7 @@ public class BookingInfo {
         this.timestart = "Pending";
         this.timefinish = "Pending";
         this.customerphone = "NONE";
-        this.valetphone = "NONE";
+        this.valetphone = valetphone;
         this.currentaddress = "NONE";
         this.totalServiceTime =totalServiceTime;
         this.services = services;

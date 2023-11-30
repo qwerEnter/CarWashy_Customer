@@ -5,7 +5,9 @@ import static com.example.carwashy.Model.CarWashRecord.convertJsonToServicesList
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +54,6 @@ public class RecordDetails extends AppCompatActivity {
         TextView textnoplate = findViewById(R.id.noplate);
         textdate.setText(date);
         textnoplate.setText(noPlate);
-
         serviceAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
         RecyclerView rvcarset = findViewById(R.id.rvcarset);
         rvcarset.setLayoutManager(new LinearLayoutManager(this));
@@ -60,7 +61,85 @@ public class RecordDetails extends AppCompatActivity {
 
         retrieveBookingInfoData(noPlate);
 
+        Button googleMaps = findViewById(R.id.buttonmap);
+        googleMaps.setOnClickListener(view -> {
 
+            String currentlocation = "";
+            TextView premiseaddress = findViewById(R.id.address);
+            String destination = premiseaddress.getText().toString();
+
+            Uri uri = Uri.parse("https://www.google.com/maps/dir/" +currentlocation+ "/" +destination);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+
+        Button contactValet = findViewById(R.id.buttonvalet);
+        contactValet.setOnClickListener(view -> {
+            // Get the valet phone number
+            TextView vnum = findViewById(R.id.valetphonenum);
+            String valetPhone = vnum.getText().toString();
+
+            // Check if the valet phone number is not empty
+            if (!valetPhone.isEmpty()) {
+                // Create an AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetails.this);
+                builder.setTitle("Call Valet");
+                builder.setMessage("Do you want to call the valet?");
+
+                // Add positive button (Yes)
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    // Create an intent to open the phone dialer with the valet's phone number
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                    dialIntent.setData(Uri.parse("tel:" + valetPhone));
+
+                    // Check if there is an app that can handle the dial intent
+                    if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                        // Start the activity to open the phone dialer
+                        startActivity(dialIntent);
+                    } else {
+                        // Handle the case where there is no app to handle the dial intent
+                        Toast.makeText(RecordDetails.this, "No app to handle phone dialer", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // Add negative button (No)
+                builder.setNegativeButton("No", (dialog, which) -> {
+                    // User clicked No, dismiss the dialog
+                    dialog.dismiss();
+                });
+
+                // Show the AlertDialog
+                builder.show();
+            } else {
+                // Handle the case where the valet phone number is empty
+                Toast.makeText(RecordDetails.this, "Valet phone number is not available", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button contactCenter = findViewById(R.id.buttoncenter);
+        contactCenter.setOnClickListener(view -> {
+            String cwcPhone = "666 111 334";
+            if (!cwcPhone.isEmpty()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetails.this);
+                builder.setTitle("Call Center");
+                builder.setMessage("Do you want to call the Car Wash Center?");
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                    dialIntent.setData(Uri.parse("tel:" + cwcPhone));
+                    if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(dialIntent);
+                    } else {
+                        Toast.makeText(RecordDetails.this, "No app to handle phone dialer", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("No", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+                builder.show();
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_home).setChecked(true);
@@ -84,6 +163,8 @@ public class RecordDetails extends AppCompatActivity {
             return false;
         });
     }
+
+
 
     private void retrieveBookingInfoData(String noPlate) {
         bookingInfoReference.orderByChild("noPlate").equalTo(noPlate).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -146,6 +227,8 @@ public class RecordDetails extends AppCompatActivity {
         List<Service> services = convertJsonToServicesList(carsetJson);
         updateRecyclerView(services);
     }
+
+
 
     private void updateRecyclerView(List<Service> services) {
         serviceAdapter.setServiceList(services);

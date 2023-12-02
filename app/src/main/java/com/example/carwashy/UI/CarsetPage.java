@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,14 +56,15 @@ public class CarsetPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carset);
 
-        // Initialize addedServicesAdapter here
+        applyRewardButton = findViewById(R.id.applyreward);
         addedServicesAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
-        addedServicesRecyclerView = findViewById(R.id.rvcarset);  // initialize addedServicesRecyclerView
+        addedServicesRecyclerView = findViewById(R.id.rvcarset);
         addedServicesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         addedServicesRecyclerView.setAdapter(addedServicesAdapter);
 
         emptyView = findViewById(R.id.emptyView);
         totalCostTextView = findViewById(R.id.totalcost);
+        Log.d("TotalCostTextView", "Value: " + totalCostTextView.getText().toString());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(false);
@@ -72,19 +74,6 @@ public class CarsetPage extends AppCompatActivity {
         carsetAdapter = new CarsetAdapter(serviceList, getSupportFragmentManager());
         recyclerView.setAdapter(carsetAdapter);
         retrieveServiceData();
-
-        applyRewardButton = findViewById(R.id.applyreward);
-        // Check if there is a claimed discount
-        SharedPreferences claimedSharedPreferences = getSharedPreferences("ClaimedRewards", Context.MODE_PRIVATE);
-        claimedDiscount = claimedSharedPreferences.getFloat("claimed_discount", 0.0f);
-        // If there is a claimed discount, make the "APPLY REWARD" button visible
-        if (claimedDiscount > 0) {
-            applyRewardButton.setVisibility(View.VISIBLE);
-        }
-        applyRewardButton.setOnClickListener(v -> {
-            // Subtract the claimed discount from the total cost
-            subtractClaimedDiscount();
-        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_service).setChecked(true);
@@ -103,6 +92,7 @@ public class CarsetPage extends AppCompatActivity {
     private void retrieveServiceData() {
         DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("Service");
         serviceReference.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceList.clear();
@@ -113,37 +103,67 @@ public class CarsetPage extends AppCompatActivity {
                     }
                 }
                 carsetAdapter.notifyDataSetChanged();
+                SharedPreferences claimedSharedPreferences = getSharedPreferences("ClaimedRewards", Context.MODE_PRIVATE);
+                claimedDiscount = claimedSharedPreferences.getFloat("claimed_discount", 0.0f);
+                Log.d("claimedDiscount", "Value: " + claimedDiscount);
+                if (claimedDiscount > 0.0) {
+                        applyRewardButton.setVisibility(View.VISIBLE);
+                        applyRewardButton.setOnClickListener(v -> {
+                            if ("Calculating ..".equals(totalCostTextView.getText().toString()))
+                            {
+                                    Toast.makeText(getApplicationContext(), "Please select your services first", Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    subtractClaimedDiscount();
+                                    SharedPreferences.Editor editor = claimedSharedPreferences.edit();
+                                    editor.apply();
+                                    }
+                        });
+                }
+                else if (claimedDiscount <= 0.0)
+                {
+                    applyRewardButton.setVisibility(View.VISIBLE);
+                    applyRewardButton.setOnClickListener(v -> {
+                    if ("Calculating ..".equals(totalCostTextView.getText().toString()))
+                    {
+                        Toast.makeText(getApplicationContext(), "Please select your services first", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), "Voucher cannot be found", Toast.LENGTH_SHORT).show();
+                    }
+                    });
+                }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if any
                 Log.e("CarsetPage", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
     }
+
+
+
     private void subtractClaimedDiscount() {
         // Get the current total cost
         String totalCostString = totalCostTextView.getText().toString().replace("RM ", "");
         double totalCost = Double.parseDouble(totalCostString);
-
-        // Subtract the claimed discount
         totalCost -= claimedDiscount;
-
-        // Update the total cost TextView
         totalCostTextView.setText("RM " + totalCost);
 
-        // Optionally, you can reset the claimed discount in SharedPreferences
         SharedPreferences claimedSharedPreferences = getSharedPreferences("ClaimedRewards", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = claimedSharedPreferences.edit();
         editor.putFloat("claimed_discount", 0.0f);
         editor.clear(); // Clear all entries in the SharedPreferences
         editor.apply();
-
-        // Optionally, hide the "APPLY REWARD" button
-        applyRewardButton.setVisibility(View.GONE);
-
-        // Add any other logic you need after applying the reward
+        applyRewardButton.setVisibility(View.VISIBLE);
+        applyRewardButton.setOnClickListener(v -> {
+            {
+                Toast.makeText(getApplicationContext(), "you claim ady", Toast.LENGTH_SHORT).show();
+            }});
     }
     private void showValetConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

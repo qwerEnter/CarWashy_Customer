@@ -81,8 +81,12 @@ public class RecordDetails extends AppCompatActivity {
             TextView vnum = findViewById(R.id.valetphonenum);
             String valetPhone = vnum.getText().toString();
 
+            if (valetPhone.equals("-") || valetPhone.isEmpty() ){
+                // Handle the case where the valet phone number is empty
+                Toast.makeText(RecordDetails.this, "Not available", Toast.LENGTH_SHORT).show();
+            }
             // Check if the valet phone number is not empty
-            if (!valetPhone.isEmpty()) {
+            else if (!valetPhone.isEmpty()) {
                 // Create an AlertDialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetails.this);
                 builder.setTitle("Call Valet");
@@ -112,9 +116,6 @@ public class RecordDetails extends AppCompatActivity {
 
                 // Show the AlertDialog
                 builder.show();
-            } else {
-                // Handle the case where the valet phone number is empty
-                Toast.makeText(RecordDetails.this, "Valet phone number is not available", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,7 +125,7 @@ public class RecordDetails extends AppCompatActivity {
             if (!cwcPhone.isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetails.this);
                 builder.setTitle("Call Center");
-                builder.setMessage("Do you want to call the Car Wash Center?");
+                builder.setMessage("Do you want to call the Premise?");
                 builder.setPositiveButton("Yes", (dialog, which) -> {
                     Intent dialIntent = new Intent(Intent.ACTION_DIAL);
                     dialIntent.setData(Uri.parse("tel:" + cwcPhone));

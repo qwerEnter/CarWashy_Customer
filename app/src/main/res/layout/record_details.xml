@@ -398,8 +398,10 @@
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
+
         <Button
             android:id="@+id/buttonmap"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -407,7 +409,16 @@
             android:text="OPEN NAVIGATION"
             android:textColor="@color/colorPrimary"
             android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="3dp"
+            android:background="@drawable/googlemap" />
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="140dp"
@@ -422,16 +433,27 @@
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
+
         <Button
             android:id="@+id/buttonvalet"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#03A9F4"
-            android:text="CONTACT VALET"
+            android:layout_marginLeft="5dp"
+            android:text="VALET"
             android:textColor="@color/white"
             android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/phone" />
+
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:layout_width="140dp"
         android:layout_height="wrap_content"
@@ -447,13 +469,21 @@
 
         <Button
             android:id="@+id/buttoncenter"
-            android:layout_width="139dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="#03A9F4"
-            android:text="CONTACT      CENTER"
+            android:layout_marginLeft="5dp"
+            android:text="PREMISE"
             android:textColor="@color/white"
             android:textSize="12dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/phone" />
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

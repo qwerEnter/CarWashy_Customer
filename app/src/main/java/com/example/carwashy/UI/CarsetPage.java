@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carwashy.Adapter.CarsetAdapter;
 import com.example.carwashy.Adapter.ServiceAdapter;
 import com.example.carwashy.Fragment.ServiceDetailsDialogFragment;
+import com.example.carwashy.Model.Premise;
 import com.example.carwashy.Model.Service;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,6 +57,10 @@ public class CarsetPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carset);
 
+        Intent intent = getIntent();
+        String selectedPremiseAddress = intent.getStringExtra("address");
+        Log.d("CarsetPage", "Address for CarsetPage: " + selectedPremiseAddress);
+
         applyRewardButton = findViewById(R.id.applyreward);
         addedServicesAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
         addedServicesRecyclerView = findViewById(R.id.rvcarset);
@@ -67,13 +72,14 @@ public class CarsetPage extends AppCompatActivity {
         Log.d("TotalCostTextView", "Value: " + totalCostTextView.getText().toString());
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(false);
+        recyclerView.setHasFixedSize(true);
         int numberOfColumns = 2;
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         serviceList = new ArrayList<>();
         carsetAdapter = new CarsetAdapter(serviceList, getSupportFragmentManager());
         recyclerView.setAdapter(carsetAdapter);
-        retrieveServiceData();
+
+        retrieveServiceData(selectedPremiseAddress);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_service).setChecked(true);
@@ -89,20 +95,39 @@ public class CarsetPage extends AppCompatActivity {
         });
     }
 
-    private void retrieveServiceData() {
-        DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("Service");
-        serviceReference.addValueEventListener(new ValueEventListener() {
-
+    private void retrieveServiceData(String selectedPremiseAddress) {
+        DatabaseReference premiseReference = FirebaseDatabase.getInstance().getReference("Premise");
+        premiseReference.orderByChild("address").equalTo(selectedPremiseAddress).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Service service = snapshot.getValue(Service.class);
-                    if (service != null) {
-                        serviceList.add(service);
+                for (DataSnapshot premiseSnapshot : dataSnapshot.getChildren()) {
+                    Premise selectedPremise = premiseSnapshot.getValue(Premise.class);
+                    if (selectedPremise != null) {
+
+                        DatabaseReference serviceReference = premiseSnapshot.getRef().child("Service");
+                        serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot serviceSnapshot) {
+                                for (DataSnapshot serviceData : serviceSnapshot.getChildren()) {
+                                    Service service = serviceData.getValue(Service.class);
+                                    if (service != null) {
+                                        // Add the service to your list
+                                        serviceList.add(service);
+                                    }
+                                }
+                                // Notify your adapter that the data has changed
+                                carsetAdapter.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Log.e("CarsetPage", "Service data retrieval failed: " + error.getMessage());
+                            }
+                        });
                     }
                 }
                 carsetAdapter.notifyDataSetChanged();
+
                 SharedPreferences claimedSharedPreferences = getSharedPreferences("ClaimedRewards", Context.MODE_PRIVATE);
                 claimedDiscount = claimedSharedPreferences.getFloat("claimed_discount", 0.0f);
                 Log.d("claimedDiscount", "Value: " + claimedDiscount);
@@ -135,9 +160,7 @@ public class CarsetPage extends AppCompatActivity {
                     }
                     });
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.e("CarsetPage", "Data retrieval failed: " + databaseError.getMessage());

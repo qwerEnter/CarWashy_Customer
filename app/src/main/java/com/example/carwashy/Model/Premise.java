@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Premise {
+    private String merchant_id;
     private String address;
     private String state;
     private List<Service> services;
@@ -17,6 +18,14 @@ public class Premise {
         this.state = state;
         this.services = new ArrayList<>();
         this.valets = new ArrayList<>();
+    }
+
+    public String getMerchant_id() {
+        return merchant_id;
+    }
+
+    public void setMerchant_id(String merchant_id) {
+        this.merchant_id = merchant_id;
     }
 
     public String getAddress() {

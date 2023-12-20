@@ -16,6 +16,7 @@ import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -74,13 +75,20 @@ public class BookingStatusPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bookingstatusList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BookingInfo status = snapshot.getValue(BookingInfo.class);
-                    if (status != null) {
-                        bookingstatusList.add(status);
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    String currentUserId = currentUser.getUid();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        BookingInfo status = snapshot.getValue(BookingInfo.class);
+
+                        // Check if customer_id exists and matches the current user's ID
+                        if (status != null && status.getCustomer_id() != null && status.getCustomer_id().equals(currentUserId)) {
+                            bookingstatusList.add(status);
+                        }
                     }
+                    bookingstatusAdapter.notifyDataSetChanged();
                 }
-                bookingstatusAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -90,6 +98,7 @@ public class BookingStatusPage extends AppCompatActivity {
             }
         });
     }
+
 
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

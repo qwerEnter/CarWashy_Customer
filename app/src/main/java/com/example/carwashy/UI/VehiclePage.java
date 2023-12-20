@@ -20,6 +20,7 @@ import com.example.carwashy.Model.Vehicle;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -103,27 +104,36 @@ public class VehiclePage extends AppCompatActivity {
 
     }
     private void retrieveVehicleData() {
-        DatabaseReference vehicleReference = FirebaseDatabase.getInstance().getReference("Vehicle");
-        vehicleReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                vehicleList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Vehicle vehicle = snapshot.getValue(Vehicle.class);
-                    if (vehicle != null) {
-                        vehicleList.add(vehicle);
-                    }
-                }
-                vehicleAdapter.notifyDataSetChanged();
-            }
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if any
-                Log.e("VehiclePage", "Data retrieval failed: " + databaseError.getMessage());
-            }
-        });
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+
+            DatabaseReference vehicleReference = FirebaseDatabase.getInstance().getReference("Vehicle");
+
+            vehicleReference.orderByChild("customer_id").equalTo(userId)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            vehicleList.clear();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Vehicle vehicle = snapshot.getValue(Vehicle.class);
+                                if (vehicle != null) {
+                                    vehicleList.add(vehicle);
+                                }
+                            }
+                            vehicleAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle errors if any
+                            Log.e("VehiclePage", "Data retrieval failed: " + databaseError.getMessage());
+                        }
+                    });
+        }
     }
+
     private void saveDataToBookingPage(Vehicle vehicle) {
         // Assuming you want to use SharedPreferences to temporarily store the data
         SharedPreferences preferencesA = getSharedPreferences("ServicePageDataA", Context.MODE_PRIVATE);

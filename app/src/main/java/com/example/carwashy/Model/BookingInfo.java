@@ -17,6 +17,7 @@ public class BookingInfo {
     private String carName;
     private String status;
     private String address;
+    private String customer_id;
     private String date;
     private String session;
     private String timestart;
@@ -31,7 +32,7 @@ public class BookingInfo {
     private List<Service> services;
 
     public BookingInfo() {
-
+        this.customer_id = customer_id;
         this.noplate = noplate;
         this.carset = new ArrayList<>();
         this.valet = valet;
@@ -105,6 +106,13 @@ public class BookingInfo {
     }
     public String getReceipt() {
         return receipt;
+    }
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
     }
 
 

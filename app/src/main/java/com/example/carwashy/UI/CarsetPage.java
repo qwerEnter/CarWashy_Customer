@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.carwashy.Adapter.CarsetAdapter;
 import com.example.carwashy.Adapter.ServiceAdapter;
 import com.example.carwashy.Fragment.ServiceDetailsDialogFragment;
-import com.example.carwashy.Model.Premise;
 import com.example.carwashy.Model.Service;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -58,8 +57,8 @@ public class CarsetPage extends AppCompatActivity {
         setContentView(R.layout.carset);
 
         Intent intent = getIntent();
-        String selectedPremiseAddress = intent.getStringExtra("address");
-        Log.d("CarsetPage", "Address for CarsetPage: " + selectedPremiseAddress);
+        String selectedPremiseId = intent.getStringExtra("merchant_id");
+        Log.d("CarsetPage", "merhcant_id for CarsetPage: " + selectedPremiseId);
 
         applyRewardButton = findViewById(R.id.applyreward);
         addedServicesAdapter = new ServiceAdapter(new ArrayList<>(), getSupportFragmentManager());
@@ -79,7 +78,7 @@ public class CarsetPage extends AppCompatActivity {
         carsetAdapter = new CarsetAdapter(serviceList, getSupportFragmentManager());
         recyclerView.setAdapter(carsetAdapter);
 
-        retrieveServiceData(selectedPremiseAddress);
+        retrieveServiceData(selectedPremiseId);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_service).setChecked(true);
@@ -95,37 +94,23 @@ public class CarsetPage extends AppCompatActivity {
         });
     }
 
-    private void retrieveServiceData(String selectedPremiseAddress) {
-        DatabaseReference premiseReference = FirebaseDatabase.getInstance().getReference("Premise");
-        premiseReference.orderByChild("address").equalTo(selectedPremiseAddress).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void retrieveServiceData(String selectedMerchantId) {
+        DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("Service");
+
+        // Order the query by child "merchant_id" and filter by selected merchant ID
+        serviceReference.orderByChild("merchant_id").equalTo(selectedMerchantId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 serviceList.clear();
-                for (DataSnapshot premiseSnapshot : dataSnapshot.getChildren()) {
-                    Premise selectedPremise = premiseSnapshot.getValue(Premise.class);
-                    if (selectedPremise != null) {
-
-                        DatabaseReference serviceReference = premiseSnapshot.getRef().child("Service");
-                        serviceReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot serviceSnapshot) {
-                                for (DataSnapshot serviceData : serviceSnapshot.getChildren()) {
-                                    Service service = serviceData.getValue(Service.class);
-                                    if (service != null) {
-                                        // Add the service to your list
-                                        serviceList.add(service);
-                                    }
-                                }
-                                // Notify your adapter that the data has changed
-                                carsetAdapter.notifyDataSetChanged();
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.e("CarsetPage", "Service data retrieval failed: " + error.getMessage());
-                            }
-                        });
+                for (DataSnapshot serviceSnapshot : dataSnapshot.getChildren()) {
+                    // Retrieve each service
+                    Service service = serviceSnapshot.getValue(Service.class);
+                    if (service != null) {
+                        // Add the service to your list
+                        serviceList.add(service);
                     }
                 }
+                // Notify your adapter that the data has changed
                 carsetAdapter.notifyDataSetChanged();
 
                 SharedPreferences claimedSharedPreferences = getSharedPreferences("ClaimedRewards", Context.MODE_PRIVATE);

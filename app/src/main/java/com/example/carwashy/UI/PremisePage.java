@@ -48,7 +48,7 @@ public class PremisePage extends AppCompatActivity {
             // Create Intent to move to the next activity (PremisePage)
             Intent intent = new Intent(PremisePage.this, CarsetPage.class);
             // Add relevant data to the intent
-            intent.putExtra("address", premise.getAddress());
+            intent.putExtra("merchant_id", premise.getMerchant_id());
             // Save the data to ServicePage in the background (you need to implement this method)
             saveDataToBookingPage(premise);
             // Start the next activity

@@ -17,6 +17,7 @@ import com.example.carwashy.Model.CarWashRecord;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,22 +76,30 @@ public class CarWashRecordPage extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 carwashrecordList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    CarWashRecord rec = snapshot.getValue(CarWashRecord.class);
-                    if (rec != null) {
-                        carwashrecordList.add(rec);
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    String currentUserId = currentUser.getUid();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        CarWashRecord rec = snapshot.getValue(CarWashRecord.class);
+
+                        // Check if customer_id exists and matches the current user's ID
+                        if (rec != null && rec.getCustomer_id() != null && rec.getCustomer_id().equals(currentUserId)) {
+                            carwashrecordList.add(rec);
+                        }
                     }
+                    carwashrecordAdapter.notifyDataSetChanged();
                 }
-                carwashrecordAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Handle errors if any
-                Log.e("BookingStatusPage", "Data retrieval failed: " + databaseError.getMessage());
+                Log.e("CarWashRecordPage", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
     }
+
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("CarWashy App");

@@ -18,7 +18,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -111,13 +110,17 @@ public class NewVehiclePage extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (currentUser != null) {
+            // Get the unique ID of the logged-in user
+            String userId = currentUser.getUid();
+
             // Create a new Vehicle object
-            Vehicle vehicle = new Vehicle(carName, noPlate, model, vehicleType, imageUri);
+            Vehicle vehicle = new Vehicle(userId, carName, noPlate, model, vehicleType, imageUri);
 
             // Save the vehicle information to Firebase with a new auto-generated ID
-            DatabaseReference vehicleReference = FirebaseDatabase.getInstance().getReference()
+            DatabaseReference vehicleReference  = FirebaseDatabase.getInstance().getReference()
                     .child("Vehicle")
                     .push(); // Generates a new unique ID for the vehicle
+
 
             vehicleReference.setValue(vehicle);
 

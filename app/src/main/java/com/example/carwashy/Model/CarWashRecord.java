@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarWashRecord {
-
+    private String customer_id;
     private String noplate;
     private List<Service> carset;
     private String valet;
@@ -31,6 +31,7 @@ public class CarWashRecord {
 
     public CarWashRecord() {
 
+        this.customer_id = customer_id;
         this.noplate = noplate;
         this.carset = new ArrayList<>();
         this.valet = valet;
@@ -49,6 +50,13 @@ public class CarWashRecord {
         this.services = services;
     }
 
+    public String getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(String customer_id) {
+        this.customer_id = customer_id;
+    }
     public String getCarsetJson() {
         Gson gson = new Gson();
         return gson.toJson(carset);

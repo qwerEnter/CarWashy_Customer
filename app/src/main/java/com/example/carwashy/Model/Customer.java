@@ -1,5 +1,8 @@
 package com.example.carwashy.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Customer {
 
     private String email;
@@ -7,6 +10,10 @@ public class Customer {
     private String name;
     private String address;
     private String phonenumber;
+
+    private List<Vehicle> vehicles;
+    private List<BookingInfo> bookinginfos;
+    private List<CarWashRecord> carWashRecords;
 
     // Required empty constructor for Firebase
     public Customer() {
@@ -19,6 +26,9 @@ public class Customer {
         this.name = name;
         this.address = address;
         this.phonenumber = phonenumber;
+        this.vehicles = new ArrayList<>();
+        this.bookinginfos = new ArrayList<>();
+        this.carWashRecords = new ArrayList<>();
     }
 
     // Getters and setters
@@ -61,5 +71,26 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Vehicle> getServices() {
+        return vehicles;
+    }
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
+    }
+
+    public List<BookingInfo> getBooking() {
+        return bookinginfos;
+    }
+    public void addBooking(BookingInfo bookingInfo) {
+        bookinginfos.add(bookingInfo);
+    }
+
+    public List<CarWashRecord> getCarWashRecords() {
+        return carWashRecords;
+    }
+    public void addCarWashRecords(CarWashRecord carWashRecord) {
+        carWashRecords.add(carWashRecord);
     }
 }

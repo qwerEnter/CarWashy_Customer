@@ -24,6 +24,8 @@ import com.example.carwashy.Fragment.SessionDialogFragment;
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.Model.Service;
 import com.example.carwashy.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -295,12 +297,30 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
 
 
     private void saveBookingInfoToFirebase(BookingInfo bookingInfo) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference bookingRef = database.getReference("BookingInfo");
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String bookingId = bookingRef.push().getKey();
-        bookingRef.child(bookingId).setValue(bookingInfo);
+        if (currentUser != null) {
+            // Get the unique ID of the current user
+            String userId = currentUser.getUid();
+
+            // Reference to the Customer node in your database
+            DatabaseReference customerRef = FirebaseDatabase.getInstance().getReference("Customer").child(userId);
+
+            // Reference to the BookingInfo node under the BookingInfo node (not under the Customer node)
+            DatabaseReference bookingRef = FirebaseDatabase.getInstance().getReference("BookingInfo");
+
+            // Generate a unique ID for the booking
+            String bookingId = bookingRef.push().getKey();
+
+            // Set the customer_id field in the BookingInfo
+            bookingInfo.setCustomer_id(userId);
+
+            // Save the booking information under the BookingInfo node
+            bookingRef.child(bookingId).setValue(bookingInfo);
+        }
     }
+
+
     private void clearSharedPreferences(String sharedPreferencesName) {
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

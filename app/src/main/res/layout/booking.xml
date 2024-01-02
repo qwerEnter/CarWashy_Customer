@@ -447,7 +447,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:backgroundTint="#00CF00"
-        android:text="CLICK HERE TO CONFIRM"
+        android:text="CONFIRM"
         android:textColor="@color/white"
         android:textSize="12dp" />
   </androidx.cardview.widget.CardView>

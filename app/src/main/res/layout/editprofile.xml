@@ -62,7 +62,6 @@
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toTopOf="@+id/name" />
 
-
         <EditText
             android:id="@+id/address"
             android:layout_width="200dp"
@@ -89,7 +88,7 @@
         android:layout_marginTop="550dp"
         app:cardCornerRadius="50dp"
         app:cardElevation="10dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="#00CF00"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,9 +98,9 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="#00CF00"
             android:text="Save Changes"
-            android:textColor="#1976D2"
+            android:textColor="@color/white"
             android:textSize="13dp" />
     </androidx.cardview.widget.CardView>
 

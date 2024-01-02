@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,7 +20,6 @@ import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.R;
 import com.example.carwashy.UI.ReBookPage;
 import com.example.carwashy.UI.ReceiptPage;
-import com.example.carwashy.UI.ReceiptPage2;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -158,10 +158,7 @@ public class BookingStatusAdapter extends RecyclerView.Adapter<BookingStatusAdap
 
                     // Save the noPlate value to SharedPreferences
                     saveNoPlateToSharedPreferences(context, noPlate, date);
-
-                    // Start the ReceiptPage activity
-                    Intent intent = new Intent(context, ReceiptPage2.class);
-                    context.startActivity(intent);
+                    Toast.makeText(context, "Verification in progress ..", Toast.LENGTH_SHORT).show();
                 }
             });
 

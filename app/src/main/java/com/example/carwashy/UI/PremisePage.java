@@ -64,6 +64,7 @@ public class PremisePage extends AppCompatActivity {
 
         // Save the data to SharedPreferences
         editor.putString("address", premise.getAddress());
+        editor.putString("merchant_id", premise.getMerchant_id());
 
         // Apply the changes
         editor.apply();

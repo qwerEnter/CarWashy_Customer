@@ -66,6 +66,7 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         Button buttonbook = findViewById(R.id.buttonbook);
         buttonbook.setOnClickListener(view -> {
 
+            String merchantId = retrieveMerchantIdFromSharedPreferencesB();
             BookingInfo bookingInfo = new BookingInfo();
             bookingInfo.setNoPlate(((TextView) findViewById(R.id.noplate)).getText().toString());
             bookingInfo.setCarName(((TextView) findViewById(R.id.carname)).getText().toString());
@@ -77,6 +78,7 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             bookingInfo.setSession(((TextView) findViewById(R.id.textsession)).getText().toString());
             bookingInfo.setPhone(((TextView) findViewById(R.id.customerphonenum)).getText().toString());
             bookingInfo.setCurrentaddress(((TextView) findViewById(R.id.customeraddress)).getText().toString());
+            bookingInfo.setMerchant_id(merchantId);
 
             // Retrieve and set the list of services from SharedPreferencesC
             List<Service> addedServices = new ArrayList<>();
@@ -86,12 +88,12 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
                 Service service = new Service(serviceName, "Default Description",  Double.parseDouble(carsets),Double.parseDouble(carsets), Double.parseDouble(carsets),Double.parseDouble(carsets),Double.parseDouble(carsets), "Default Image Uri");
                 addedServices.add(service);
             }
-
             bookingInfo.setCarsetJson(BookingInfo.convertServicesListToJson(addedServices)); // Set the list of services to the BookingInfo
             saveBookingInfoToFirebase(bookingInfo);
 
             clearSharedPreferences("ServicePageDataA");
             clearSharedPreferences("ServicePageDataB");
+            clearSharedPreferences("retrieveMerchantIdFromSharedPreferencesB");
             clearSharedPreferences("ServicePageDataC");
             clearSharedPreferences("ServicePageDataD");
             clearSharedPreferences("ServicePageDataE");
@@ -126,7 +128,6 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             String selectedDate = ((TextView) findViewById(R.id.textdate)).getText().toString();
             getAllSessionsFromFirebase(selectedDate, "Session 3 ( 6PM - 10PM )");
         });
-
     }
 
 
@@ -156,6 +157,11 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         String premiseAddress = preferencesB.getString("address", "");
 
         address.setText(premiseAddress);
+
+    }
+    private String retrieveMerchantIdFromSharedPreferencesB() {
+        SharedPreferences preferencesB = getSharedPreferences("ServicePageDataB", Context.MODE_PRIVATE);
+        return preferencesB.getString("merchant_id", "");
     }
     private void retrieveDataFromSharedPreferencesC() {
         SharedPreferences sharedPreferencesC = getSharedPreferences("ServicePageDataC", Context.MODE_PRIVATE);
@@ -235,28 +241,6 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
         textsession.setText(session);
     }
 
-    private void getAllSessionsFromFirebase(String selectedDate, String targetSession) {
-        List<BookingInfo> sessions = new ArrayList<>();
-
-        sessionReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    BookingInfo session = snapshot.getValue(BookingInfo.class);
-                    if (session != null && session.getDate().equals(selectedDate) && session.getSession().equals(targetSession)) {
-                        sessions.add(session);
-                    }
-                }
-
-                showSessionsDialog(selectedDate, sessions);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Handle error
-            }
-        });
-    }
     private void showSessionsDialog(String selectedDate, List<BookingInfo> sessions) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Sessions for " + selectedDate);
@@ -293,7 +277,28 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
 
         return filteredSessions;
     }
+    private void getAllSessionsFromFirebase(String selectedDate, String targetSession) {
+        List<BookingInfo> sessions = new ArrayList<>();
 
+        sessionReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BookingInfo session = snapshot.getValue(BookingInfo.class);
+                    if (session != null && session.getDate().equals(selectedDate) && session.getSession().equals(targetSession)) {
+                        sessions.add(session);
+                    }
+                }
+
+                showSessionsDialog(selectedDate, sessions);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle error
+            }
+        });
+    }
 
 
     private void saveBookingInfoToFirebase(BookingInfo bookingInfo) {
@@ -319,8 +324,6 @@ public class BookingPage extends AppCompatActivity implements DatePickerDialog.O
             bookingRef.child(bookingId).setValue(bookingInfo);
         }
     }
-
-
     private void clearSharedPreferences(String sharedPreferencesName) {
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

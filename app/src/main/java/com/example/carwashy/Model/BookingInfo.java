@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingInfo {
-
+    private String merchant_id;
     private String noplate;
     private String receipt;
     private List<Service> carset;
@@ -49,7 +49,15 @@ public class BookingInfo {
         this.currentaddress = "NONE";
         this.totalServiceTime =totalServiceTime;
         this.services = services;
-        this.receipt = receipt;}
+        this.receipt = receipt;
+    }
+
+    public String getMerchant_id() {
+        return merchant_id;
+    }
+    public void setMerchant_id(String merchant_id) {
+        this.merchant_id = merchant_id;
+    }
 
     public String getCarsetJson() {
         Gson gson = new Gson();

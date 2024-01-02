@@ -24,20 +24,33 @@
 
         <TextView
             android:id="@+id/textRewardDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="Reward Description: "
             android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/buttonClaim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Claim"
-            android:textColor="#FFFFFF"
-            android:background="#00FF00"
-            android:visibility="gone" />
+
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonClaim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Redeem"
+        android:layout_marginLeft="110dp"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#00CF00"/>
+
+    <Button
+        android:id="@+id/buttonUnclaim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Redeem"
+        android:layout_marginLeft="110dp"
+        android:layout_gravity="center"
+        android:textColor="#BAB9B9"
+        android:backgroundTint="#009F00"/>
 
 </androidx.cardview.widget.CardView>

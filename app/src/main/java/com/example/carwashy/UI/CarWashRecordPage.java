@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,12 +35,14 @@ public class CarWashRecordPage extends AppCompatActivity {
     private CarWashRecordAdapter carwashrecordAdapter;
     private List<CarWashRecord> carwashrecordList;
     private Context context;
+    private ImageView cwbookingimage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carwashrecord);
 
         recyclerView = findViewById(R.id.rv); // Replace with your actual RecyclerView ID
+        cwbookingimage = findViewById(R.id.cwbookingimage);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -47,6 +51,13 @@ public class CarWashRecordPage extends AppCompatActivity {
         recyclerView.setAdapter(carwashrecordAdapter);
 
         retrieveBookingStatusData();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                checkRecyclerViewEmpty();
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_status).setChecked(true);
@@ -98,6 +109,14 @@ public class CarWashRecordPage extends AppCompatActivity {
                 Log.e("CarWashRecordPage", "Data retrieval failed: " + databaseError.getMessage());
             }
         });
+    }
+    private void checkRecyclerViewEmpty() {
+        // Check if the bookingstatusList is empty
+        if (carwashrecordList.isEmpty()) {
+            cwbookingimage.setVisibility(View.VISIBLE);
+        } else {
+            cwbookingimage.setVisibility(View.GONE);
+        }
     }
 
     private void showLogoutConfirmationDialog() {

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Adapter.ValetAdapter;
-import com.example.carwashy.Model.Premise;
 import com.example.carwashy.Model.Valet;
 import com.example.carwashy.R;
 import com.google.firebase.database.DataSnapshot;
@@ -61,47 +60,34 @@ public class ValetPage extends AppCompatActivity {
         retrieveValetData(selectedPremiseAddress);
     }
     private void retrieveValetData(String selectedPremiseAddress) {
-        DatabaseReference premiseReference = FirebaseDatabase.getInstance().getReference("Premise");
-        premiseReference.orderByChild("address").equalTo(selectedPremiseAddress).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference valetReference = FirebaseDatabase.getInstance().getReference("Valet");
+
+        // Query valet nodes where the "address" field matches selectedPremiseAddress
+        valetReference.orderByChild("location").equalTo(selectedPremiseAddress).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 valetList.clear();
-                for (DataSnapshot premiseSnapshot : dataSnapshot.getChildren()) {
-                    // The loop should only run once since address is unique
-                    Premise selectedPremise = premiseSnapshot.getValue(Premise.class);
-                    if (selectedPremise != null) {
-                        DatabaseReference valetReference = premiseSnapshot.getRef().child("Valet");
-                        valetReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot valetSnapshot) {
-                                Log.d("ValetPage", "onDataChange: valetSnapshot = " + valetSnapshot);
-                                for (DataSnapshot valetData : valetSnapshot.getChildren()) {
-                                    Valet valet = valetData.getValue(Valet.class);
-                                    if (valet != null) {
-                                        valetList.add(valet);
-                                        Log.d("ValetPage", "Valet data: " + valet.toString());
-                                    }
-                                }
-                                valetAdapter.notifyDataSetChanged();
-                                Log.e("Valet", "Valet data successfully retrieved");
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Log.e("Valet", "Valet data retrieval failed: " + error.getMessage());
-                            }
-                        });
+                for (DataSnapshot valetSnapshot : dataSnapshot.getChildren()) {
+                    Valet valet = valetSnapshot.getValue(Valet.class);
+                    if (valet != null) {
+                        valetList.add(valet);
+                        Log.d("ValetPage", "Valet data: " + valet.toString());
                     }
                 }
+
+                valetAdapter.notifyDataSetChanged();
+                Log.e("Valet", "Valet data successfully retrieved");
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors if any
-                Log.e("ValetPage", "Data retrieval failed: " + databaseError.getMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Valet", "Valet data retrieval failed: " + error.getMessage());
             }
         });
     }
+
+
 
 
 

@@ -4,47 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".UI.RewardPage">
 
-    <TextView
-        android:id="@+id/textView"
-        style="@android:style/Widget.Holo.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:shadowDx="5"
-        android:shadowDy="5"
-        android:shadowRadius="1"
-        android:text="New Reward"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-
-        android:textColor="#DF6589"
+    <ImageView
+        android:id="@+id/imagereward"
+        android:layout_width="330dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/rewardimage_icon" />
 
     <TextView
         android:id="@+id/points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="56dp"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_below="@+id/imagereward"
+        android:layout_marginTop="240dp"
+        android:layout_toEndOf="@+id/imagereward"
         android:text="NONE"
-        android:textSize="30dp"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/imagereward"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/imagereward"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
-        android:layout_width="311dp"
-        android:layout_height="312dp"
-        android:layout_marginTop="188dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:layout_width="350dp"
+        android:layout_height="476dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

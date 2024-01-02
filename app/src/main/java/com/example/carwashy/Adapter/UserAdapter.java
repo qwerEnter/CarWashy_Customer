@@ -48,6 +48,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.RewardViewHold
 
         // Check if totalPoints is equal to or more than reward.getRewardPoint()
         if (totalPoints >= reward.getRewardPoint()) {
+            holder.buttonUnclaim.setVisibility(View.GONE);
             holder.buttonClaim.setVisibility(View.VISIBLE);
             holder.buttonClaim.setOnClickListener(v -> {
                 // Implement your claim logic here
@@ -55,6 +56,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.RewardViewHold
             });
         } else {
             holder.buttonClaim.setVisibility(View.GONE);
+            holder.buttonUnclaim.setVisibility(View.VISIBLE);
         }
     }
 
@@ -131,13 +133,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.RewardViewHold
     public static class RewardViewHolder extends RecyclerView.ViewHolder {
         TextView textRewardPoint;
         TextView textRewardDesc;
-        Button buttonClaim;
+        Button buttonClaim,buttonUnclaim;
 
         public RewardViewHolder(@NonNull View itemView) {
             super(itemView);
             textRewardPoint = itemView.findViewById(R.id.textRewardPoint);
             textRewardDesc = itemView.findViewById(R.id.textRewardDesc);
             buttonClaim = itemView.findViewById(R.id.buttonClaim);
+            buttonUnclaim = itemView.findViewById(R.id.buttonUnclaim);
         }
     }
 }

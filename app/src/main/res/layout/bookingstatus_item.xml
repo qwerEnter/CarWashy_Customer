@@ -84,7 +84,7 @@
                 android:layout_alignStart="@+id/text11"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="10dp"
-                android:text="TIMESLOT"
+                android:text="STATUS"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -103,7 +103,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/session"
+                android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"
@@ -121,7 +121,7 @@
                 android:layout_alignStart="@+id/text2"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:text="STATUS"
+                android:text="TIMESLOT"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/session"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"

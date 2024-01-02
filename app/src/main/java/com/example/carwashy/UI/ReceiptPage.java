@@ -158,7 +158,7 @@ public class ReceiptPage extends AppCompatActivity {
                             // Navigate to BookingStatusPage
                             Intent intent = new Intent(ReceiptPage.this, BookingStatusPage.class);
                             startActivity(intent);
-                        }, 2000); // 3000 milliseconds (3 seconds) delay, adjust as needed
+                        }, 1000); // 3000 milliseconds (3 seconds) delay, adjust as needed
 
                         return;
                     }

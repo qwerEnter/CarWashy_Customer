@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class VehiclePage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private VehicleAdapter vehicleAdapter;
     private List<Vehicle> vehicleList;
+    private ImageView bgbookingimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class VehiclePage extends AppCompatActivity {
         setContentView(R.layout.vehicle);
 
         recyclerView = findViewById(R.id.rv2);
+        bgbookingimage = findViewById(R.id.bgbookingimage);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -69,6 +72,13 @@ public class VehiclePage extends AppCompatActivity {
 
         // Retrieve data from Firebase and update the RecyclerView
         retrieveVehicleData();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                checkRecyclerViewEmpty();
+            }
+        });
 
         // Go to the service page
         Button buttonAddVehicle = findViewById(R.id.buttonadd);
@@ -131,6 +141,14 @@ public class VehiclePage extends AppCompatActivity {
                             Log.e("VehiclePage", "Data retrieval failed: " + databaseError.getMessage());
                         }
                     });
+        }
+    }
+    private void checkRecyclerViewEmpty() {
+        // Check if the bookingstatusList is empty
+        if (vehicleList.isEmpty()) {
+            bgbookingimage.setVisibility(View.VISIBLE);
+        } else {
+            bgbookingimage.setVisibility(View.GONE);
         }
     }
 

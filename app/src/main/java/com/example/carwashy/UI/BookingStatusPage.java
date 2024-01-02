@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,13 +32,15 @@ public class BookingStatusPage extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BookingStatusAdapter bookingstatusAdapter;
     private List<BookingInfo> bookingstatusList;
+    private ImageView bgbookingimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bookingstatus);
 
-        recyclerView = findViewById(R.id.rv); // Replace with your actual RecyclerView ID
+        recyclerView = findViewById(R.id.rv);
+        bgbookingimage = findViewById(R.id.bgbookingimage);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -46,12 +50,17 @@ public class BookingStatusPage extends AppCompatActivity {
 
         // Retrieve data from Firebase and update the RecyclerView
         retrieveBookingStatusData();
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                checkRecyclerViewEmpty();
+            }
+        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.getMenu().findItem(R.id.menu_status).setChecked(true);
         bottomNavigationView.setOnItemSelectedListener(item -> {
-            // Your existing code for handling item selection
-
             if (item.getItemId() == R.id.menu_home) {
                 Intent intent = new Intent(BookingStatusPage.this, HomePage.class);
                 startActivity(intent);
@@ -68,6 +77,8 @@ public class BookingStatusPage extends AppCompatActivity {
             return false;
         });
     }
+
+
 
     private void retrieveBookingStatusData() {
         DatabaseReference statusReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
@@ -98,7 +109,14 @@ public class BookingStatusPage extends AppCompatActivity {
             }
         });
     }
-
+    private void checkRecyclerViewEmpty() {
+        // Check if the bookingstatusList is empty
+        if (bookingstatusList.isEmpty()) {
+            bgbookingimage.setVisibility(View.VISIBLE);
+        } else {
+            bgbookingimage.setVisibility(View.GONE);
+        }
+    }
 
     private void showLogoutConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -35,6 +36,7 @@ import java.util.List;
 
 public class CarsetPage extends AppCompatActivity {
 
+
     private RecyclerView recyclerView,recyclerViewSet;
     private Service service;
     private TextView totalCostTextView;
@@ -54,6 +56,12 @@ public class CarsetPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {}
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
         setContentView(R.layout.carset);
 
         Intent intent = getIntent();

@@ -1,11 +1,14 @@
 package com.example.carwashy.UI;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,12 +75,9 @@ public class NewVehiclePage extends AppCompatActivity {
 
         // Save button click listener
         Button saveButton = findViewById(R.id.buttonaddvechicle);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveVehicleInfo();
-            }
-        });
+        saveButton.setOnClickListener(view ->
+
+                saveVehicleInfo());
 
         // Set OnClickListener for the imagecar
         imagecar.setOnClickListener(v -> {
@@ -96,6 +96,14 @@ public class NewVehiclePage extends AppCompatActivity {
     }
 
     private void saveVehicleInfo() {
+
+        AlertDialog.Builder progressDialogBuilder = new AlertDialog.Builder(this);
+        View progressDialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+        progressDialogBuilder.setView(progressDialogView);
+        progressDialogBuilder.setCancelable(false); // Prevent user from canceling the dialog
+        AlertDialog progressDialog = progressDialogBuilder.create();
+        progressDialog.show();
+
         String carName = carNameEditText.getText().toString().trim();
         String noPlate = noPlateEditText.getText().toString().trim();
         String model = modelEditText.getText().toString().trim();
@@ -132,10 +140,12 @@ public class NewVehiclePage extends AppCompatActivity {
                 // Upload the image to Firebase Storage and save URL to Realtime Database
                 uploadImageToFirebaseStorage(Uri.parse(imageUri), imageName, vehicleReference);
             }
-
-            // Optionally, show a success message or navigate to another page
-            Toast.makeText(NewVehiclePage.this, "Vehicle information saved successfully", Toast.LENGTH_SHORT).show();
-            finish();
+            new Handler().postDelayed(() -> {
+                progressDialog.dismiss();
+                // Optionally, show a success message or navigate to another page
+                Toast.makeText(NewVehiclePage.this, "Vehicle information saved successfully", Toast.LENGTH_SHORT).show();
+                finish();
+            }, 2000); // 2000 milliseconds delay
         }
     }
 

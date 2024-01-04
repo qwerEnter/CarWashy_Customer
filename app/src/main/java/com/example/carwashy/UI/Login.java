@@ -1,11 +1,14 @@
-package com.example.carwashy;
+package com.example.carwashy.UI;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,9 +16,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.carwashy.UI.ForgotPasswordPage;
-import com.example.carwashy.UI.HomePage;
-import com.example.carwashy.UI.RegisterPage;
+import com.example.carwashy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,7 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
-
+    ProgressBar progressBarLogin;
     EditText email,password;
     TextView textView;
     Button btnregister,btnlogin;
@@ -108,16 +109,24 @@ public class Login extends AppCompatActivity {
             return;
         }
 
+        // Create an AlertDialog with a custom layout
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false); // Optional: Prevent user from canceling the dialog
+        AlertDialog progressDialog = builder.create();
+        progressDialog.show();
+
         //login user db
         mAuth.signInWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-
+                // Dismiss the AlertDialog
+                progressDialog.dismiss();
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(Login.this, "Welcome", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), HomePage.class);
-                    startActivity(intent);
+                    Intent splashIntent = new Intent(Login.this, SplashScreenActivity.class);
+                    startActivity(splashIntent);
                     finish();
                 }
                 else

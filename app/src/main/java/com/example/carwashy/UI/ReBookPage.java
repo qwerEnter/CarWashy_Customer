@@ -1,6 +1,7 @@
 package com.example.carwashy.UI;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -13,8 +14,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.carwashy.Fragment.DatePickerFragment;
 import com.example.carwashy.Fragment.SessionDialogFragment;
-import com.example.carwashy.R;
 import com.example.carwashy.Model.BookingInfo;
+import com.example.carwashy.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,6 +66,9 @@ public class ReBookPage extends AppCompatActivity implements DatePickerDialog.On
 
             // Perform the update in Firebase
             updateBookingInfo(noPlate, date, updatedDate, updatedSession);
+
+            Intent intent = new Intent(ReBookPage.this, BookingStatusPage.class);
+            startActivity(intent);
         });
     }
 

@@ -1,8 +1,5 @@
 package com.example.carwashy.UI;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -13,13 +10,17 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.carwashy.Login;
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.carwashy.Model.Customer;
 import com.example.carwashy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,11 @@ public class RegisterPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {}
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
         setContentView(R.layout.register);
 
         database = FirebaseDatabase.getInstance();
@@ -122,6 +128,14 @@ public class RegisterPage extends AppCompatActivity {
             return;
         }
 
+        // Create an AlertDialog with a custom layout
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false); // Optional: Prevent user from canceling the dialog
+        AlertDialog progressDialog = builder.create();
+        progressDialog.show();
+
         //create user
         auth.createUserWithEmailAndPassword(userEmail, userPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -134,11 +148,11 @@ public class RegisterPage extends AppCompatActivity {
                     database.getReference().child("Customer").child(id).setValue(userModel);
 
                     Toast.makeText(RegisterPage.this, "Register Successfully", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(RegisterPage.this, "Welcome", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    Intent intent = new Intent(getApplicationContext(), SplashScreenActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
+                    progressDialog.dismiss();
                     Toast.makeText(RegisterPage.this, "Registration Failed", Toast.LENGTH_LONG).show();
                 }
             }

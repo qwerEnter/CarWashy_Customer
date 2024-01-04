@@ -420,49 +420,15 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/cardView5"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="160dp"
         android:backgroundTint="#03A9F4"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="200dp"
         app:cardElevation="10dp"
-        android:layout_marginRight="160dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView3"
-        app:layout_constraintStart_toStartOf="@+id/cardView3"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3">
-
-
-        <Button
-            android:id="@+id/buttonvalet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
-            android:layout_marginLeft="5dp"
-            android:text="VALET"
-            android:textColor="@color/white"
-            android:textSize="12dp" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/phone" />
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:backgroundTint="#03A9F4"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="200dp"
-        app:cardElevation="10dp"
-        android:layout_marginRight="160dp"
         app:layout_constraintEnd_toEndOf="@+id/cardView3"
         app:layout_constraintStart_toStartOf="@+id/cardView3"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
@@ -472,8 +438,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="#03A9F4"
             android:layout_marginLeft="5dp"
+            android:backgroundTint="#03A9F4"
             android:text="PREMISE"
             android:textColor="@color/white"
             android:textSize="12dp" />

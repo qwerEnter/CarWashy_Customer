@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Adapter.VehicleAdapter;
-import com.example.carwashy.Login;
 import com.example.carwashy.Model.Vehicle;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -71,6 +71,7 @@ public class VehiclePage extends AppCompatActivity {
         });
 
         // Retrieve data from Firebase and update the RecyclerView
+
         retrieveVehicleData();
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -119,6 +120,13 @@ public class VehiclePage extends AppCompatActivity {
         if (currentUser != null) {
             String userId = currentUser.getUid();
 
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View dialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+            builder.setView(dialogView);
+            builder.setCancelable(false); // Optional: Prevent user from canceling the dialog
+            AlertDialog progressDialog = builder.create();
+            progressDialog.show();
+
             DatabaseReference vehicleReference = FirebaseDatabase.getInstance().getReference("Vehicle");
 
             vehicleReference.orderByChild("customer_id").equalTo(userId)
@@ -133,12 +141,14 @@ public class VehiclePage extends AppCompatActivity {
                                 }
                             }
                             vehicleAdapter.notifyDataSetChanged();
+                            progressDialog.dismiss();
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                             // Handle errors if any
                             Log.e("VehiclePage", "Data retrieval failed: " + databaseError.getMessage());
+                            progressDialog.dismiss();
                         }
                     });
         }

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carwashy.Adapter.UserAdapter;
-import com.example.carwashy.Login;
 import com.example.carwashy.Model.Reward;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

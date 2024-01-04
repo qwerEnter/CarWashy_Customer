@@ -17,4 +17,9 @@
         <item name="itemTextColor">@color/white</item>
     </style>
 
+    <style name="TransparentAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:backgroundDimAmount">0.0</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 </resources>

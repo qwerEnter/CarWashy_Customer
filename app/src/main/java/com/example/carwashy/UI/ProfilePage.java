@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.carwashy.Login;
 import com.example.carwashy.Model.Customer;
 import com.example.carwashy.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

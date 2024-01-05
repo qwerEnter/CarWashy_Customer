@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/menu_status"
-        android:title="Status"
-        android:icon="@drawable/baseline_book_online_24"/>
+        android:title="Booking Status"
+        android:icon="@drawable/ic_baseline_bookingstatus_24"/>
 
     <item
         android:id="@+id/menu_home"

@@ -49,6 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         style="@style/BottomNavigationView"
-        app:menu="@menu/bottom_navigation_status" />
+        app:menu="@menu/bottom_navigation_record" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -80,6 +81,12 @@ public class BookingStatusPage extends AppCompatActivity {
 
 
     private void retrieveBookingStatusData() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false); // Optional: Prevent user from canceling the dialog
+        AlertDialog progressDialog = builder.create();
+        progressDialog.show();
         DatabaseReference statusReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
         statusReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,6 +104,7 @@ public class BookingStatusPage extends AppCompatActivity {
                             bookingstatusList.add(status);
                         }
                     }
+                    progressDialog.dismiss();
                     bookingstatusAdapter.notifyDataSetChanged();
                 }
             }

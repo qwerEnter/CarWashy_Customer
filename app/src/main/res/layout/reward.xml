@@ -26,7 +26,8 @@
         android:layout_marginTop="240dp"
         android:layout_toEndOf="@+id/imagereward"
         android:text="NONE"
-        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textColor="#00CF00"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="@+id/imagereward"
         app:layout_constraintHorizontal_bias="0.512"
@@ -36,7 +37,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="350dp"
-        android:layout_height="476dp"
+        android:layout_height="440dp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        style="@style/BottomNavigationView2"
-        app:menu="@menu/bottom_navigation_home" />
+        style="@style/BottomNavigationView"
+        app:menu="@menu/bottom_navigation_reward" />
 </androidx.constraintlayout.widget.ConstraintLayout>

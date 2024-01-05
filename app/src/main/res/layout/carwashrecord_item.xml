@@ -84,7 +84,7 @@
                 android:layout_alignStart="@+id/text11"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="10dp"
-                android:text="TIMESLOT"
+                android:text="STATUS"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -103,7 +103,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/timestart"
+                android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"
@@ -114,15 +114,27 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/noplate"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="33dp"
+                android:layout_toEndOf="@+id/timestart"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/timefinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"
-                android:layout_marginStart="76dp"
-                android:layout_marginTop="9dp"
-                android:layout_toEndOf="@+id/dot2"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="33dp"
+                android:layout_toEndOf="@+id/to"
                 android:text="NONE"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/text3"
@@ -132,7 +144,7 @@
                 android:layout_alignStart="@+id/text2"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:text="STATUS"
+                android:text="TIMESLOT"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -151,7 +163,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/status"
+                android:id="@+id/timestart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/noplate"

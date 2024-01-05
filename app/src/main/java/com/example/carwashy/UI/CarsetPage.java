@@ -103,6 +103,7 @@ public class CarsetPage extends AppCompatActivity {
     }
 
     private void retrieveServiceData(String selectedMerchantId) {
+
         DatabaseReference serviceReference = FirebaseDatabase.getInstance().getReference("Service");
 
         // Order the query by child "merchant_id" and filter by selected merchant ID

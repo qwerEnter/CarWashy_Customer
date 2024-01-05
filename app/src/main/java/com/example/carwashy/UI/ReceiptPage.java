@@ -1,6 +1,6 @@
 package com.example.carwashy.UI;
 
-import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -8,8 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -17,12 +20,12 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.carwashy.Model.BookingInfo;
 import com.example.carwashy.Model.CarWashRecord;
 import com.example.carwashy.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,9 +65,18 @@ public class ReceiptPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt);
+        TextView totalCostTextView = findViewById(R.id.totalcost);
+
+        // Retrieve the current user ID
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         receiptReference = FirebaseDatabase.getInstance().getReference("BookingInfo");
+        if (currentUser != null) {
+            String currentUserId = currentUser.getUid();
 
+            // Retrieve total cost based on the current user ID
+            retrieveTotalCost(currentUserId, totalCostTextView);
+        }
         imagereceipt = findViewById(R.id.imagereceipt);
 
         // Retrieve the noPlate value from SharedPreferences
@@ -86,22 +98,53 @@ public class ReceiptPage extends AppCompatActivity {
         storageRef = FirebaseStorage.getInstance().getReference("receipts");
 
         // Set OnClickListener for the imagecar
-        imagereceipt.setOnClickListener(v -> {
-            // Check for permission before launching the gallery
-            if (ContextCompat.checkSelfPermission(ReceiptPage.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                // Request the permission if it's not granted
-                ActivityCompat.requestPermissions(ReceiptPage.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-            } else {
-                // Permission already granted, launch the gallery
-                launchGallery();
+            imagereceipt.setOnClickListener(v -> {
+                // Show the image picker dialog
+                showImagePickerDialog();
+            });
+    }
+
+    private void retrieveTotalCost(String userId, TextView totalCostTextView) {
+        // Search for the BookingInfo node with the specified customer_id
+        receiptReference.orderByChild("customer_id").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    BookingInfo bookingInfo = snapshot.getValue(BookingInfo.class);
+                    if (bookingInfo != null) {
+                        // Set the total cost to the TextView
+                        totalCostTextView.setText(bookingInfo.getTotalcost());
+                        return;
+                    }
+                }
+                // No matching data found
+                totalCostTextView.setText("N/A");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle errors
+                totalCostTextView.setText("Error");
             }
         });
     }
-
+    private void showImagePickerDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReceiptPage.this);
+        builder.setTitle("CarWashy");
+        builder.setMessage("Upload your receipt in any image format");
+        builder.setPositiveButton("Continue", (dialog, which) -> {
+            // User clicked Yes, launch the gallery
+            launchGallery();
+        });
+        builder.show();
+    }
     private void uploadReceiptImage(Uri imageUri) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.progress_dialog, null);
+        builder.setView(dialogView);
+        builder.setCancelable(false); // Optional: Prevent user from canceling the dialog
+        AlertDialog progressDialog = builder.create();
+        progressDialog.show();
         // Create a unique filename for the image
         String fileName = "receipt_" + System.currentTimeMillis();
 
@@ -115,7 +158,7 @@ public class ReceiptPage extends AppCompatActivity {
                     imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         // Update the download URL in Firebase Database
                         updateBookingInfo(noPlate, date, uri.toString());
-
+                        progressDialog.dismiss();
                     });
                 })
                 .addOnFailureListener(e -> {

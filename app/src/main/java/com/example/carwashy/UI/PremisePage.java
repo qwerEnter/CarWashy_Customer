@@ -70,6 +70,7 @@ public class PremisePage extends AppCompatActivity {
         editor.apply();
     }
     private void retrievePremiseData() {
+
         DatabaseReference premiseReference = FirebaseDatabase.getInstance().getReference("Premise");
         premiseReference.addValueEventListener(new ValueEventListener() {
             @Override

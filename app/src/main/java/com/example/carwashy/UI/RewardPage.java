@@ -56,6 +56,7 @@ public class RewardPage extends AppCompatActivity {
         retrieveRewardData();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.getMenu().findItem(R.id.menu_profile).setChecked(true);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             // Your existing code for handling item selection
 
@@ -65,8 +66,6 @@ public class RewardPage extends AppCompatActivity {
                 return true;
             }
             if (item.getItemId() == R.id.menu_profile) {
-                Intent intent = new Intent(RewardPage.this, ProfilePage.class);
-                startActivity(intent);
                 return true;
             }
             if (item.getItemId() == R.id.menu_logout) {

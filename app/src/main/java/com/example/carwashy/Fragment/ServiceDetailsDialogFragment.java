@@ -62,7 +62,6 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
         TextView descriptionTextView = view.findViewById(R.id.descriptionTextView);
         ImageView imageView = view.findViewById(R.id.imageView);
         Button addButton = view.findViewById(R.id.addServiceButton);
-        Button cancelButton = view.findViewById(R.id.buttoncancel);
 
         totalCostTextView = requireActivity().findViewById(R.id.totalcost);
         emptyView = requireActivity().findViewById(R.id.emptyView);
@@ -98,7 +97,6 @@ public class ServiceDetailsDialogFragment extends DialogFragment {
             saveDataToBookingPage(); // Call the new method to update data
             dismiss();
         });
-        cancelButton.setOnClickListener(v -> dismiss());
 
         builder.setView(view);
         return builder.create();

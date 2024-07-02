@@ -1,0 +1,1 @@
+is an application that will allow you to book reservations, locate the nearest car wash to get its navigation, and get a valet to pick up notified cars for detailing or any other service purposes.

@@ -2,3 +2,8 @@ Car Washy is an application that will allow you to book reservations, locate the
 ![Android Application](https://github.com/qwerEnter/CarWashy_Customer/assets/97009880/fa5b1ae2-b0bd-4b06-a3fe-62ff1c2ada9d)
 
 
+
+feel free to feed me!
+https://buymeacoffee.com/imannajmi1q
+
+
